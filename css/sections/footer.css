@@ -27,6 +27,11 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--spacing-xl);
+    gap: var(--spacing-xl);
+}
+
+.footer-logo {
+    flex: 1;
 }
 
 .footer-logo .logo {
@@ -43,14 +48,16 @@
 .footer-social {
     display: flex;
     gap: var(--spacing-md);
+    justify-content: center;
+    flex: 1;
 }
 
 .social-link {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 65px;
-    height: 65px;
+    width: 48px;
+    height: 48px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     transition: all var(--transition-normal);
@@ -62,8 +69,8 @@
 }
 
 .social-icon {
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    height: 24px;
     filter: brightness(0) invert(1);
     transition: transform var(--transition-normal);
 }
@@ -79,35 +86,50 @@
 }
 
 .footer-contact {
+    flex: 1;
     text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
 }
 
 .phone-link {
     color: var(--accent-color);
-    font-size: 24px;
+    font-size: var(--font-size-2xl);
     text-decoration: none;
-    transition: color var(--transition-normal);
+    transition: all var(--transition-normal);
     display: inline-block;
     position: relative;
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.5px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: rgba(184, 156, 90, 0.1);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(184, 156, 90, 0.2);
 }
 
 .phone-link::after {
     content: '';
     position: absolute;
     bottom: -2px;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 0;
-    height: 1px;
+    height: 2px;
     background: var(--accent-color);
     transition: width var(--transition-normal);
 }
 
 .phone-link:hover {
     color: var(--accent-color-light);
+    background: rgba(184, 156, 90, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(184, 156, 90, 0.1);
 }
 
 .phone-link:hover::after {
-    width: 100%;
+    width: 80%;
 }
 
 .footer-bottom {
@@ -140,6 +162,11 @@
         width: 40px;
         height: 40px;
     }
+
+    .phone-link {
+        font-size: var(--font-size-lg);
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
 }
 
 @media (max-width: 480px) {
@@ -157,6 +184,7 @@
 
     .phone-link {
         font-size: var(--font-size-base);
+        padding: var(--spacing-xs) var(--spacing-sm);
     }
 
     .social-link {
