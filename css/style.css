@@ -1,0 +1,113 @@
+/* Импорт настроек и компонентов */
+@import url('settings.css');
+@import url('components/buttons.css');
+
+/* Импорт секций */
+@import url('sections/header.css');
+@import url('sections/hero.css');
+@import url('sections/white-section.css');
+@import url('sections/services.css');
+@import url('sections/pink-section.css');
+@import url('sections/testimonials.css');
+@import url('sections/footer.css');
+
+/* Базовые стили */
+:root {
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-main);
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    line-height: var(--line-height-normal);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Контейнер */
+.section-container {
+    width: 100%;
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: var(--spacing-2xl) var(--spacing-xl);
+}
+
+.section-container > p {
+    font-size: var(--font-size-lg);
+    line-height: 1.6;
+    color: var(--text-color);
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto var(--spacing-2xl);
+}
+
+/* Заголовки секций */
+.section-title {
+    font-family: var(--font-headings);
+    font-size: var(--font-size-2xl);
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+    color: var(--text-color);
+}
+
+/* Медиа запросы */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+
+    .section-title {
+        font-size: var(--font-size-xl);
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .section-container {
+        padding: var(--spacing-xl) var(--spacing-lg);
+    }
+
+    .section-container > p {
+        font-size: var(--font-size-md);
+        padding: 0 var(--spacing-lg);
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-container {
+        padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    .section-container > p {
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--spacing-lg);
+        padding: 0 var(--spacing-sm);
+        line-height: 1.4;
+    }
+}
+
+h5{
+    color: rgb(255, 255, 255)
+}

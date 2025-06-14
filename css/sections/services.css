@@ -1,0 +1,187 @@
+.services-section {
+    position: relative;
+    padding: var(--spacing-2xl) var(--spacing-md);
+    background:var(--primary-color-light);
+    z-index: 2;
+    overflow: hidden;
+}
+
+.services-section h2 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-xl);
+    color: var(--bg-color-light);
+    text-align: center;
+    line-height: 1.3;
+}
+
+.services-section > .section-container > p {
+    font-size: var(--font-size-lg);
+    line-height: 1.6;
+    color: var(--bg-color-light);
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto var(--spacing-2xl);
+}
+
+.services-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: var(--spacing-2xl);
+}
+
+.service-item {
+    position: relative;
+    background: var(--bg-color-light);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 70% 100%, 0% 100%);
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+.service-item:hover {
+    transform: rotate(0deg);
+}
+
+.service-item--image {
+    aspect-ratio: 1 / 1;
+    clip-path: none;
+    border: none;
+    box-sizing: border-box;
+}
+
+.service-item--image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+}
+
+.service-item--image:hover img {
+    transform: scale(1.05);
+}
+
+.service-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+    color: var(--bg-color-light);
+    padding: var(--spacing-md);
+    transform: translateY(100%);
+    transition: transform var(--transition-normal);
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.service-item--image:hover .service-overlay {
+    transform: translateY(100%);
+}
+
+.service-overlay h3 {
+    color: var(--bg-color-light);
+    margin-bottom: 0;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+}
+
+.service-item--text {
+    border: none;
+    padding: var(--spacing-xl);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    clip-path: none;
+    background: var(--bg-color-light);
+    aspect-ratio: 1 / 1;
+}
+
+.service-item--text h4 {
+    font-size: var(--font-size-xl);
+    color: var(--text-color);
+    margin-bottom: var(--spacing-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.service-item--text p {
+    font-size: var(--font-size-base);
+    color: var(--text-color-light);
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .services-list {
+        grid-template-columns: repeat(2, 1fr); 
+        gap: var(--spacing-md);
+    }
+}
+
+@media (max-width: 768px) {
+    .services-list {
+        grid-template-columns: 1fr; 
+        gap: var(--spacing-md);
+    }
+
+    .service-item--image,
+    .service-item--text {
+        width: 90%; /* Ограничение ширины для мобильных */
+        margin: 0 auto; 
+    }
+    
+    .service-item {
+        clip-path: none; /* Убираем сложные формы на мобильных */
+        border-radius: var(--radius-md);
+    }
+
+    .service-item--text {
+        padding: var(--spacing-lg);
+    }
+}
+
+@media (max-width: 480px) {
+    .services-section {
+        padding: var(--spacing-xl) var(--spacing-sm);
+    }
+
+    .services-section h2 {
+        font-size: var(--font-size-2xl);
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .services-section > .section-container > p {
+        font-size: var(--font-size-base);
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .service-item--image {
+        min-height: 200px;
+    }
+
+    .service-overlay h3 {
+        font-size: var(--font-size-lg);
+    }
+
+    .service-item--text h4 {
+        font-size: var(--font-size-lg);
+    }
+
+    .service-item--text p {
+        font-size: var(--font-size-sm);
+    }
+} 
