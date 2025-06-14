@@ -206,73 +206,34 @@
 /* Адаптивность */
 @media (max-width: 768px) {
     .testimonials-section {
-        padding: var(--spacing-xl) var(--spacing-lg);
+        padding: var(--spacing-xl) var(--spacing-md);
     }
     
     .testimonials-title {
-        font-size: var(--font-size-xl);
-        margin-bottom: var(--spacing-xl);
-    }
-    
-    .testimonials-description {
-        font-size: var(--font-size-md);
-        max-width: 600px;
-        margin: 0 auto var(--spacing-sm);
-    }
-
-    .testimonial-carousel {
-        max-width: 360px; /* Уменьшил размер карточки */
-        padding: 0 0px;
-    }
-    
-    .testimonial-slide {
-        flex: 0 0 360px; /* Уменьшил размер карточки */
-        padding: 0px;
-    }
-    
-    .testimonial-card {
-        max-width: 360px; /* Уменьшил размер карточки */
-        height: 624px; /* Уменьшил размер карточки */
-        border-radius: 25px;
-    }
-    
-    .testimonial-image {
-        border-radius: 25px;
-    }
-
-    .carousel-button {
-        display: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .testimonials-section {
-        padding: var(--spacing-lg) var(--spacing-md);
-    }
-    
-    .testimonials-title {
-        font-size: var(--font-size-xl);
+        font-size: var(--font-size-2xl);
         margin-bottom: var(--spacing-lg);
     }
     
     .testimonials-description {
-        font-size: var(--font-size-sm);
-        margin: 0 auto var(--spacing-xs);
+        font-size: var(--font-size-base);
+        padding: 0 var(--spacing-md);
+        margin-bottom: var(--spacing-xl);
     }
 
     .testimonial-carousel {
-        max-width: 360px; 
+        max-width: 100%;
         padding: 0;
     }
     
     .testimonial-slide {
-        flex: 0 0 360px; 
-        padding: 0px;
+        flex: 0 0 280px;
+        padding: 0 var(--spacing-xs);
     }
     
     .testimonial-card {
-        max-width: 360px; 
-        height: 624px; 
+        max-width: 280px;
+        height: 480px;
+        border-radius: 20px;
     }
     
     .testimonial-image {
@@ -280,7 +241,72 @@
     }
 
     .carousel-button {
-        display: none;
+        display: flex;
+        width: 40px;
+        height: 40px;
+    }
+
+    .carousel-button.prev {
+        left: var(--spacing-sm);
+    }
+
+    .carousel-button.next {
+        right: var(--spacing-sm);
+    }
+}
+
+@media (max-width: 480px) {
+    .testimonials-section {
+        padding: var(--spacing-lg) var(--spacing-sm);
+    }
+    
+    .testimonials-title {
+        font-size: var(--font-size-xl);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .testimonials-description {
+        font-size: var(--font-size-sm);
+        padding: 0 var(--spacing-sm);
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .testimonial-carousel {
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    .testimonial-slide {
+        flex: 0 0 240px;
+        padding: 0 var(--spacing-xs);
+    }
+    
+    .testimonial-card {
+        max-width: 240px;
+        height: 400px;
+        border-radius: 15px;
+    }
+    
+    .testimonial-image {
+        border-radius: 15px;
+    }
+
+    .carousel-button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .carousel-button.prev {
+        left: var(--spacing-xs);
+    }
+
+    .carousel-button.next {
+        right: var(--spacing-xs);
+    }
+
+    .carousel-progress {
+        width: 90%;
+        bottom: 10px;
     }
 }
 
