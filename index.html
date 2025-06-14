@@ -6,6 +6,7 @@
   <title>Александр Богачев - Риэлтор в Москве</title>
   <meta name="description" content="Профессиональные услуги риэлтора в Москве. Помощь в покупке и продаже недвижимости. Более 10 лет опыта и 200 успешных сделок.">
   <meta name="keywords" content="риэлтор, недвижимость, Москва, покупка квартиры, продажа квартиры">
+  <link rel="preload" href="/img/hero-bg.jpg" as="image" type="image/jpeg" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=FORUM&display=swap">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/x-icon" href="img/favicon.ico">
@@ -13,8 +14,8 @@
 <body>
   <header class="header">
     <div class="header-container">
-      <a href="#" class="logo">
-        Александр Богачев
+      <a href="#" class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+        <img src="img/logo.png" alt="Логотип" class="logo-img">
       </a>
       <nav class="nav">
         <a href="#about" class="nav-link">Обо Мне</a>
@@ -180,24 +181,25 @@
 
   </main>
 
-  <footer class="footer" id="footer">
+  <footer class="footer">
     <div class="footer-container">
       <div class="footer-content">
-        <div class="footer-logo">
-        </div>
         <div class="footer-social">
-          <a href="https://t.me/your_username" class="social-link" target="_blank" rel="noopener noreferrer">
-            <img src="img/social/telegram.svg" alt="Telegram" class="social-icon">
-          </a>
-          <a href="https://instagram.com/your_username" class="social-link" target="_blank" rel="noopener noreferrer">
-            <img src="img/social/instagram.svg" alt="Instagram" class="social-icon">
-          </a>
-          <a href="https://wa.me/your_phone_number" class="social-link" target="_blank" rel="noopener noreferrer">
-            <img src="img/social/whatsapp.svg" alt="WhatsApp" class="social-icon">
-          </a>
-        </div>
-        <div class="footer-contact">
-          <a href="tel:+79001234567" class="phone-link">+7 (900) 123-45-67</a>
+          <button type="button" class="social-button" id="telegramButton" aria-label="Telegram" onclick="window.open('https://t.me/your_username', '_blank', 'noopener,noreferrer')">
+            <img src="img/social/Telegram.svg" alt="Telegram" class="social-icon">
+          </button>
+          <button type="button" class="social-button" id="whatsappButton" aria-label="WhatsApp" onclick="window.open('https://wa.me/79001234567', '_blank', 'noopener,noreferrer')">
+            <img src="img/social/WhatsApp.svg" alt="WhatsApp" class="social-icon">
+          </button>
+          <button type="button" class="social-button" id="instagramButton" aria-label="Instagram" onclick="window.open('https://instagram.com/your_username', '_blank', 'noopener,noreferrer')">
+            <img src="img/social/Instagram.svg" alt="Instagram" class="social-icon">
+          </button>
+          <div class="phone-button-container">
+            <a href="tel:+79001234567" class="phone-button" id="phoneButton" onclick="handlePhoneClick(event)">
+              <span class="phone-text">+7 (900) 123-45-67</span>
+              <span class="phone-copy">Скопировано!</span>
+            </a>
+          </div>
         </div>
       </div>
       <div class="footer-bottom">
@@ -205,8 +207,26 @@
       </div>
     </div>
   </footer>
-
   <script src="js/script.js"></script>
-  
+  <script>
+    function handlePhoneClick(event) {
+      // Проверяем, является ли устройство мобильным
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      
+      if (!isMobile) {
+        // На десктопе копируем номер
+        event.preventDefault();
+        const phoneNumber = '+79001234567';
+        navigator.clipboard.writeText(phoneNumber).then(() => {
+          const button = document.getElementById('phoneButton');
+          button.classList.add('copied');
+          setTimeout(() => {
+            button.classList.remove('copied');
+          }, 2000);
+        });
+      }
+      // На мобильных устройствах просто открывается звонок
+    }
+  </script>
 </body>
 </html>
