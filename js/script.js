@@ -240,3 +240,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 }); 
 
+ function handlePhoneClick(event) {
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      
+      if (!isMobile) {
+        event.preventDefault();
+        const phoneNumber = '+79001234567';
+        navigator.clipboard.writeText(phoneNumber).then(() => {
+          const button = document.getElementById('phoneButton');
+          button.classList.add('copied');
+          setTimeout(() => {
+            button.classList.remove('copied');
+          }, 2000);
+        });
+      }
+    }

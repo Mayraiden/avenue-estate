@@ -24,112 +24,123 @@
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-bottom: var(--spacing-xl);
-    gap: var(--spacing-xl);
-}
-
-.footer-logo {
-    flex: 1;
-}
-
-.footer-logo .logo {
-    color: var(--accent-color);
-    font-size: var(--font-size-2xl);
-    text-decoration: none;
-    transition: color var(--transition-normal);
-}
-
-.footer-logo .logo:hover {
-    color: var(--accent-color-light);
 }
 
 .footer-social {
     display: flex;
     gap: var(--spacing-md);
     justify-content: center;
-    flex: 1;
+    align-items: center;
+    position: relative;
+    width: 100%;
 }
 
-.social-link {
-    display: flex;
+.social-button {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
-    background: rgba(255, 255, 255, 0.1);
+    width: 64px;
+    height: 64px;
+    background: #2AABEE; /* Цвет Telegram */
     border-radius: 50%;
-    transition: all var(--transition-normal);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #2AABEE;
+    box-shadow: none;
+    cursor: pointer !important;
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    line-height: 1;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    z-index: 1;
 }
 
-.social-link:hover {
-    background: var(--accent-color);
-    transform: translateY(-3px);
+/* Стили для кнопки WhatsApp */
+#whatsappButton {
+    background: #25D366; /* Цвет WhatsApp */
+    border-color: #25D366;
+}
+
+/* Стили для кнопки Instagram */
+#instagramButton {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    border-color: #dc2743;
+}
+
+.social-button:hover {
+    transform: translateY(-3px) scale(1.1);
+    border-color: #ffffff;
+    cursor: pointer !important;
+}
+
+.social-button:focus {
+    outline: none;
+    border-color: #ffffff;
+    cursor: pointer !important;
+}
+
+.social-button:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+    cursor: pointer !important;
 }
 
 .social-icon {
-    width: 24px;
-    height: 24px;
-    filter: brightness(0) invert(1);
-    transition: transform var(--transition-normal);
-}
-
-.social-link:hover .social-icon {
-    transform: scale(1.1);
-}
-
-.social-link img {
     width: 32px;
     height: 32px;
-    transition: transform 0.3s ease;
+    filter: brightness(0) invert(1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 2;
 }
 
-.footer-contact {
-    flex: 1;
-    text-align: right;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: var(--spacing-lg);
+.social-button:hover .social-icon {
+    transform: scale(1.2);
 }
 
-.phone-link {
-    color: var(--accent-color);
-    font-size: var(--font-size-2xl);
-    text-decoration: none;
-    transition: all var(--transition-normal);
-    display: inline-block;
-    position: relative;
-    font-weight: var(--font-weight-medium);
-    letter-spacing: 0.5px;
-    padding: var(--spacing-sm) var(--spacing-md);
-    background: rgba(184, 156, 90, 0.1);
-    border-radius: var(--radius-md);
-    border: 1px solid rgba(184, 156, 90, 0.2);
+.social-button:active {
+    transform: translateY(-1px) scale(1.05);
+    background: #2AABEE;
+    cursor: pointer !important;
 }
 
-.phone-link::after {
+#whatsappButton:active {
+    background: #25D366;
+}
+
+#instagramButton:active {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+/* Добавляем эффект при наведении курсора */
+.social-button::after {
     content: '';
     position: absolute;
-    bottom: -2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 2px;
-    background: var(--accent-color);
-    transition: width var(--transition-normal);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
 }
 
-.phone-link:hover {
-    color: var(--accent-color-light);
-    background: rgba(184, 156, 90, 0.15);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(184, 156, 90, 0.1);
-}
-
-.phone-link:hover::after {
-    width: 80%;
+.social-button:hover::after {
+    opacity: 1;
 }
 
 .footer-bottom {
@@ -143,6 +154,68 @@
     font-size: var(--font-size-sm);
 }
 
+.phone-button-container {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.phone-button {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer !important;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-width: 220px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-weight: 500;
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.phone-button:hover {
+    background: var(--accent-color-light);
+    transform: translateY(-2px);
+}
+
+.phone-button:active {
+    transform: translateY(0);
+}
+
+.phone-text,
+.phone-copy {
+    position: absolute;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: center;
+    pointer-events: none;
+}
+
+.phone-copy {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.phone-button.copied .phone-text {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.phone-button.copied .phone-copy {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 @media (max-width: 768px) {
     .footer-content {
         flex-direction: column;
@@ -150,22 +223,37 @@
         text-align: center;
     }
 
-    .footer-contact {
-        text-align: center;
+    .social-button {
+        width: 60px;
+        height: 60px;
+        cursor: pointer !important;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .social-icon {
+        width: 30px;
+        height: 30px;
     }
 
     .footer-social {
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
         justify-content: center;
     }
 
-    .social-link img {
-        width: 40px;
-        height: 40px;
+    .phone-button-container {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        margin-top: var(--spacing-md);
+        width: 100%;
     }
 
-    .phone-link {
-        font-size: var(--font-size-lg);
-        padding: var(--spacing-xs) var(--spacing-sm);
+    .phone-button {
+        width: 100%;
+        min-width: unset;
+        font-size: 16px;
     }
 }
 
@@ -178,22 +266,20 @@
         padding: 0 var(--spacing-md);
     }
 
-    .footer-logo .logo {
-        font-size: var(--font-size-lg);
-    }
-
-    .phone-link {
-        font-size: var(--font-size-base);
-        padding: var(--spacing-xs) var(--spacing-sm);
-    }
-
-    .social-link {
-        width: 36px;
-        height: 36px;
+    .social-button {
+        width: 56px;
+        height: 56px;
+        cursor: pointer !important;
     }
 
     .social-icon {
-        width: 20px;
-        height: 20px;
+        width: 28px;
+        height: 28px;
+    }
+
+    .phone-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        height: 44px;
     }
 } 
