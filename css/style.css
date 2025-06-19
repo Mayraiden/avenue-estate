@@ -1,15 +1,4 @@
-/* Импорт настроек и компонентов */
-@import url('settings.css');
-@import url('components/buttons.css');
-
-/* Импорт секций */
-@import url('sections/header.css');
-@import url('sections/hero.css');
-@import url('sections/white-section.css');
-@import url('sections/services.css');
-@import url('sections/pink-section.css');
-@import url('sections/testimonials.css');
-@import url('sections/footer.css');
+/* Все секционные CSS подключайте через <link> в <head> index.html для максимальной скорости */
 
 /* Базовые стили */
 :root {
@@ -20,10 +9,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
-    user-select: none; /* Standard */
+}
+
+.button, .social-button, .phone-button, .social-icon {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 html {

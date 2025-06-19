@@ -27,6 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const sectionId = this.getAttribute('href').substring(1);
         scrollToSection(sectionId);
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
       });
     });
 
@@ -238,20 +240,118 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('beforeunload', () => {
         stopAutoSlide();
     });
-}); 
 
- function handlePhoneClick(event) {
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      
-      if (!isMobile) {
-        event.preventDefault();
-        const phoneNumber = '+79001234567';
-        navigator.clipboard.writeText(phoneNumber).then(() => {
-          const button = document.getElementById('phoneButton');
-          button.classList.add('copied');
-          setTimeout(() => {
-            button.classList.remove('copied');
-          }, 2000);
-        });
-      }
+    // Мобильное меню (бургер)
+    const burger = document.querySelector('.mobile-menu-btn');
+    const nav = document.querySelector('.nav');
+    let navCloseTimeout;
+
+    function closeMenu() {
+      nav.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      clearTimeout(navCloseTimeout);
+      navCloseTimeout = setTimeout(() => {
+        nav.classList.add('nav--hidden');
+      }, 750); // чуть больше, чем transition
     }
+
+    function openMenu() {
+      nav.classList.remove('nav--hidden');
+      nav.classList.add('open');
+      burger.setAttribute('aria-expanded', 'true');
+      clearTimeout(navCloseTimeout);
+    }
+
+    if (burger && nav) {
+      burger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (nav.classList.contains('open')) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      // Закрытие по клику вне меню
+      document.addEventListener('click', function(e) {
+        if (nav.classList.contains('open') && !nav.contains(e.target) && !burger.contains(e.target)) {
+          closeMenu();
+        }
+      });
+
+      // Закрытие по ESC
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && nav.classList.contains('open')) {
+          closeMenu();
+        }
+      });
+
+      // Автоматически закрывать меню при ресайзе на десктоп
+      window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+          closeMenu();
+        }
+      });
+    }
+
+    // Обработчик для phoneButton: копирование на десктопе, звонок на мобильных, смена текста
+    const phoneButton = document.getElementById('phoneButton');
+    if (phoneButton) {
+      phoneButton.addEventListener('click', function (event) {
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const phoneNumber = '+79001234567';
+        if (isMobile) {
+          window.location.href = 'tel:' + phoneNumber;
+        } else if (navigator.clipboard && navigator.clipboard.writeText) {
+          event.preventDefault();
+          navigator.clipboard.writeText(phoneNumber).then(() => {
+            phoneButton.classList.add('copied');
+            setTimeout(() => {
+              phoneButton.classList.remove('copied');
+            }, 2000);
+          }).catch((err) => {
+            fallbackCopy(phoneNumber);
+          });
+        } else {
+          fallbackCopy(phoneNumber);
+        }
+
+        function fallbackCopy(text) {
+          // Fallback через временный input
+          const tempInput = document.createElement('input');
+          tempInput.value = text;
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          tempInput.setSelectionRange(0, 99999); // для мобильных
+          let success = false;
+          try {
+            success = document.execCommand('copy');
+          } catch (err) {
+            success = false;
+          }
+          document.body.removeChild(tempInput);
+          phoneButton.classList.add('copied');
+          setTimeout(() => {
+            phoneButton.classList.remove('copied');
+          }, 2000);
+          if (!success) {
+            alert('Не удалось скопировать номер. Просто скопируйте вручную: ' + text);
+          }
+        }
+      });
+    }
+
+    function syncPhoneButtonWidth() {
+        const phoneButton = document.querySelector('.footer-phone-right');
+        const messengers = document.querySelector('.footer-messengers');
+        if (!phoneButton || !messengers) return;
+        if (window.innerWidth <= 768) {
+            const messengersWidth = messengers.offsetWidth;
+            phoneButton.style.width = messengersWidth + 'px';
+        } else {
+            phoneButton.style.width = '';
+        }
+    }
+    window.addEventListener('resize', syncPhoneButtonWidth);
+    syncPhoneButtonWidth();
+});

@@ -206,57 +206,6 @@
 /* Адаптивность */
 @media (max-width: 768px) {
     .testimonials-section {
-        padding: var(--spacing-xl) var(--spacing-md);
-    }
-    
-    .testimonials-title {
-        font-size: var(--font-size-2xl);
-        margin-bottom: var(--spacing-lg);
-    }
-    
-    .testimonials-description {
-        font-size: var(--font-size-base);
-        padding: 0 var(--spacing-md);
-        margin-bottom: var(--spacing-xl);
-    }
-
-    .testimonial-carousel {
-        max-width: 100%;
-        padding: 0;
-    }
-    
-    .testimonial-slide {
-        flex: 0 0 280px;
-        padding: 0 var(--spacing-xs);
-    }
-    
-    .testimonial-card {
-        max-width: 280px;
-        height: 480px;
-        border-radius: 20px;
-    }
-    
-    .testimonial-image {
-        border-radius: 20px;
-    }
-
-    .carousel-button {
-        display: flex;
-        width: 40px;
-        height: 40px;
-    }
-
-    .carousel-button.prev {
-        left: var(--spacing-sm);
-    }
-
-    .carousel-button.next {
-        right: var(--spacing-sm);
-    }
-}
-
-@media (max-width: 480px) {
-    .testimonials-section {
         padding: var(--spacing-lg) var(--spacing-sm);
     }
     

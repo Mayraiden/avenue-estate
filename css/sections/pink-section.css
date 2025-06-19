@@ -87,11 +87,11 @@
 
 @media (max-width: 768px) {
     .pink-section {
-        padding: var(--spacing-xl) var(--spacing-sm);
+        padding: var(--spacing-lg) var(--spacing-xs);
     }
 
     .pink-section .section-container {
-        padding: var(--spacing-xl) var(--spacing-md);
+        padding: var(--spacing-lg) var(--spacing-sm);
     }
 
     .benefits-grid {
@@ -100,30 +100,31 @@
     }
 
     .pink-section h2 {
-        font-size: var(--font-size-xl);
-        margin-bottom: var(--spacing-lg);
-        padding: 0 var(--spacing-md);
+        font-size: var(--font-size-lg);
+        margin-bottom: var(--spacing-md);
+        padding: 0 var(--spacing-sm);
     }
 
     .pink-section > .section-container > p {
-        font-size: var(--font-size-base);
-        margin-bottom: var(--spacing-xl);
-        padding: 0 var(--spacing-md);
-        line-height: 1.5;
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--spacing-lg);
+        padding: 0 var(--spacing-sm);
+        line-height: 1.4;
     }
 
     .benefit {
-        padding: var(--spacing-lg);
+        padding: var(--spacing-md);
     }
 
     .benefit h3 {
-        font-size: var(--font-size-lg);
+        font-size: var(--font-size-md);
+        margin-bottom: var(--spacing-sm);
         line-height: 1.3;
     }
 
     .benefit p {
-        font-size: var(--font-size-base);
-        line-height: 1.5;
+        font-size: var(--font-size-sm);
+        line-height: 1.4;
     }
 }
 

@@ -133,24 +133,34 @@
 }
 
 @media (max-width: 768px) {
-    .services-list {
-        grid-template-columns: 1fr; 
-        gap: var(--spacing-md);
+    .services-section {
+        padding: var(--spacing-xl) var(--spacing-sm);
     }
 
-    .service-item--image,
-    .service-item--text {
-        width: 90%; /* Ограничение ширины для мобильных */
-        margin: 0 auto; 
-    }
-    
-    .service-item {
-        clip-path: none; /* Убираем сложные формы на мобильных */
-        border-radius: var(--radius-md);
+    .services-section h2 {
+        font-size: var(--font-size-2xl);
+        margin-bottom: var(--spacing-lg);
     }
 
-    .service-item--text {
-        padding: var(--spacing-lg);
+    .services-section > .section-container > p {
+        font-size: var(--font-size-base);
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .service-item--image {
+        min-height: 200px;
+    }
+
+    .service-overlay h3 {
+        font-size: var(--font-size-lg);
+    }
+
+    .service-item--text h4 {
+        font-size: var(--font-size-lg);
+    }
+
+    .service-item--text p {
+        font-size: var(--font-size-sm);
     }
 }
 

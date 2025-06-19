@@ -7,7 +7,18 @@
   <meta name="description" content="Профессиональные услуги риэлтора в Москве. Помощь в покупке и продаже недвижимости. Более 10 лет опыта и 200 успешных сделок.">
   <meta name="keywords" content="риэлтор, недвижимость, Москва, покупка квартиры, продажа квартиры">
   <link rel="preload" href="/img/hero-bg.jpg" as="image" type="image/jpeg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=FORUM&display=swap">
+  <link rel="stylesheet" href="css/settings.css">
+  <link rel="stylesheet" href="css/components/buttons.css">
+  <link rel="stylesheet" href="css/sections/header.css">
+  <link rel="stylesheet" href="css/sections/hero.css">
+  <link rel="stylesheet" href="css/sections/white-section.css">
+  <link rel="stylesheet" href="css/sections/services.css">
+  <link rel="stylesheet" href="css/sections/pink-section.css">
+  <link rel="stylesheet" href="css/sections/testimonials.css">
+  <link rel="stylesheet" href="css/sections/footer.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
@@ -15,7 +26,7 @@
   <header class="header">
     <div class="header-container">
       <a href="#" class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
-        <img src="img/logo.png" alt="Логотип" class="logo-img">
+        <img src="img/logo.png" alt="Логотип" class="logo-img" loading="lazy">
       </a>
       <nav class="nav">
         <a href="#about" class="nav-link">Обо Мне</a>
@@ -71,7 +82,7 @@
         <p>Предоставляю полный спектр услуг в сфере недвижимости с гарантией качества и безопасности сделки</p>
         <div class="services-list">
           <div class="service-item service-item--image">
-            <img src="img/services/buy.jpg" alt="Покупка недвижимости">
+            <img src="img/services/buy.jpg" alt="Покупка недвижимости" loading="lazy">
             <div class="service-overlay">
               <h3>Покупка недвижимости</h3>
             </div>
@@ -83,7 +94,7 @@
           </div>
 
           <div class="service-item service-item--image">
-            <img src="img/services/mortgage.jpg" alt="Ипотечное сопровождение">
+            <img src="img/services/mortgage.jpg" alt="Ипотечное сопровождение" loading="lazy">
             <div class="service-overlay">
               <h3>Ипотечное сопровождение</h3>
             </div>
@@ -95,7 +106,7 @@
           </div>
 
           <div class="service-item service-item--image">
-            <img src="img/services/invest.jpg" alt="Юридическая проверка">
+            <img src="img/services/invest.jpg" alt="Юридическая проверка" loading="lazy">
             <div class="service-overlay">
               <h3>Юридическая проверка</h3>
             </div>
@@ -135,40 +146,40 @@
       <p class="testimonials-description">Узнайте, что говорят мои клиенты о нашей совместной работе и достигнутых результатах.</p>
       <div class="testimonial-carousel">
         <div class="carousel-dots"></div>
-        <h5>Тут был лунтик</h5>
+          <h5>Тут был лунтик</h5> 
         <div class="testimonial-track">
           <div class="testimonial-slide">
             <div class="testimonial-card">
               <div class="testimonial-image">
-                <img src="img/testimonials/testimonial1.jpg" alt="Отзыв клиента">
+                <img src="img/testimonials/testimonial1.jpg" alt="Отзыв клиента" loading="lazy">
               </div>
             </div>
           </div>
           <div class="testimonial-slide">
             <div class="testimonial-card">
               <div class="testimonial-image">
-                <img src="img/testimonials/testimonial2.jpg" alt="Отзыв клиента">
+                <img src="img/testimonials/testimonial2.jpg" alt="Отзыв клиента" loading="lazy">
               </div>
             </div>
           </div>
           <div class="testimonial-slide">
             <div class="testimonial-card">
               <div class="testimonial-image">
-                <img src="img/testimonials/testimonial3.jpg" alt="Отзыв клиента">
+                <img src="img/testimonials/testimonial3.jpg" alt="Отзыв клиента" loading="lazy">
               </div>
             </div>
           </div>
           <div class="testimonial-slide">
             <div class="testimonial-card">
               <div class="testimonial-image">
-                <img src="img/testimonials/testimonial3.jpg" alt="Отзыв клиента">
+                <img src="img/testimonials/testimonial3.jpg" alt="Отзыв клиента" loading="lazy">
               </div>
             </div>
           </div>
           <div class="testimonial-slide">
             <div class="testimonial-card">
               <div class="testimonial-image">
-                <img src="img/testimonials/testimonial3.jpg" alt="Отзыв клиента">
+                <img src="img/testimonials/testimonial3.jpg" alt="Отзыв клиента" loading="lazy">
               </div>
             </div>
           </div>
@@ -181,32 +192,33 @@
 
   </main>
 
-  <footer class="footer">
+  <footer class="footer" id="footer">
     <div class="footer-container">
       <div class="footer-content">
+        <div class="footer-spacer"></div>
         <div class="footer-social">
-          <button type="button" class="social-button" id="telegramButton" aria-label="Telegram" onclick="window.open('https://t.me/your_username', '_blank', 'noopener,noreferrer')">
-            <img src="img/social/Telegram.svg" alt="Telegram" class="social-icon">
-          </button>
-          <button type="button" class="social-button" id="whatsappButton" aria-label="WhatsApp" onclick="window.open('https://wa.me/79001234567', '_blank', 'noopener,noreferrer')">
-            <img src="img/social/WhatsApp.svg" alt="WhatsApp" class="social-icon">
-          </button>
-          <button type="button" class="social-button" id="instagramButton" aria-label="Instagram" onclick="window.open('https://instagram.com/your_username', '_blank', 'noopener,noreferrer')">
-            <img src="img/social/Instagram.svg" alt="Instagram" class="social-icon">
-          </button>
-          <button class="phone-button-container">
-            <a href="tel:+79001234567" class="phone-button" id="phoneButton" onclick="handlePhoneClick(event)">
-              <span class="phone-text">+7 (900) 123-45-67</span>
-              <span class="phone-copy">Скопировано!</span>
-            </a>
-          </button>
+          <div class="footer-messengers">
+            <button type="button" class="social-button" id="telegramButton" aria-label="Telegram" onclick="window.open('https://t.me/your_username', '_blank', 'noopener,noreferrer')">
+              <img src="img/social/Telegram.svg" alt="Telegram" class="social-icon" loading="lazy">
+            </button>
+            <button type="button" class="social-button" id="whatsappButton" aria-label="WhatsApp" onclick="window.open('https://wa.me/79001234567', '_blank', 'noopener,noreferrer')">
+              <img src="img/social/WhatsApp.svg" alt="WhatsApp" class="social-icon" loading="lazy">
+            </button>
+            <button type="button" class="social-button" id="instagramButton" aria-label="Instagram" onclick="window.open('https://instagram.com/your_username', '_blank', 'noopener,noreferrer')">
+              <img src="img/social/Instagram.svg" alt="Instagram" class="social-icon" loading="lazy">
+            </button>
+          </div>
         </div>
+        <button type="button" class="phone-button footer-phone-right" id="phoneButton">
+          <span class="phone-text">+7 (900) 123-45-67</span>
+          <span class="phone-copy">Скопировано!</span>
+        </button>
       </div>
       <div class="footer-bottom">
         <p>&copy; 2025 Александр Богачев. Все права защищены.</p>
       </div>
     </div>
   </footer>
-  <script src="js/script.js"></script>
+  <script src="js/script.js" defer></script>
 </body>
 </html>

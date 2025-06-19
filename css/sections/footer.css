@@ -24,18 +24,39 @@
 
 .footer-content {
     display: flex;
-    justify-content: center;
     align-items: center;
+    min-height: 100px;
     margin-bottom: var(--spacing-xl);
+    position: relative;
 }
 
 .footer-social {
     display: flex;
-    gap: var(--spacing-md);
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
-    position: relative;
-    width: 100%;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin: 0 auto;
+}
+
+.footer-messengers {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-md);
+    margin: 0;
+}
+
+.footer-phone-right {
+    min-width: 220px;
+    margin-left: 48px;
+    position: static;
+    right: unset;
+    top: unset;
+    transform: none;
+}
+
+.footer-spacer {
+    min-width: 220px;
 }
 
 .social-button {
@@ -169,7 +190,7 @@
     border-radius: 8px;
     font-size: 18px;
     cursor: pointer !important;
-    transition: all 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), background 0.3s;
     position: relative;
     overflow: hidden;
     min-width: 220px;
@@ -179,17 +200,18 @@
     justify-content: center;
     text-decoration: none;
     font-weight: 500;
-    z-index: 10;
+    z-index: 2;
     pointer-events: auto;
 }
 
 .phone-button:hover {
-    background: var(--accent-color-light);
-    transform: translateY(-2px);
+    transform: scale(1.07);
+    background: var(--accent-color);
 }
 
 .phone-button:active {
-    transform: translateY(0);
+    transform: scale(1.03);
+    background: var(--accent-color);
 }
 
 .phone-text,
@@ -199,6 +221,7 @@
     width: 100%;
     text-align: center;
     pointer-events: none;
+    z-index: 1;
 }
 
 .phone-copy {
@@ -221,26 +244,51 @@
         flex-direction: column;
         gap: var(--spacing-xl);
         text-align: center;
+        justify-content: center;
+        align-items: center;
+        position: static;
+        min-height: unset;
     }
-
+    .footer-social {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-md);
+        justify-content: center;
+        margin: 0;
+        position: static;
+        left: unset;
+        top: unset;
+        transform: none;
+    }
+    .footer-messengers {
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: var(--spacing-md);
+    }
+    .footer-phone-right {
+        width: 100%;
+        min-width: 0;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        font-size: 16px;
+        padding: 10px 24px;
+        height: 44px;
+        position: static;
+        right: auto;
+        top: auto;
+        transform: none;
+    }
     .social-button {
         width: 60px;
         height: 60px;
         cursor: pointer !important;
         -webkit-tap-highlight-color: transparent;
     }
-
     .social-icon {
         width: 30px;
         height: 30px;
     }
-
-    .footer-social {
-        flex-wrap: wrap;
-        gap: var(--spacing-sm);
-        justify-content: center;
-    }
-
     .phone-button-container {
         position: relative;
         right: auto;
@@ -249,11 +297,13 @@
         margin-top: var(--spacing-md);
         width: 100%;
     }
-
     .phone-button {
         width: 100%;
         min-width: unset;
         font-size: 16px;
+    }
+    .footer-spacer {
+        display: none;
     }
 }
 
