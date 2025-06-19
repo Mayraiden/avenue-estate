@@ -194,12 +194,12 @@
           <button type="button" class="social-button" id="instagramButton" aria-label="Instagram" onclick="window.open('https://instagram.com/your_username', '_blank', 'noopener,noreferrer')">
             <img src="img/social/Instagram.svg" alt="Instagram" class="social-icon">
           </button>
-          <div class="phone-button-container">
+          <button class="phone-button-container">
             <a href="tel:+79001234567" class="phone-button" id="phoneButton" onclick="handlePhoneClick(event)">
               <span class="phone-text">+7 (900) 123-45-67</span>
               <span class="phone-copy">Скопировано!</span>
             </a>
-          </div>
+          </button>
         </div>
       </div>
       <div class="footer-bottom">
@@ -208,25 +208,5 @@
     </div>
   </footer>
   <script src="js/script.js"></script>
-  <script>
-    function handlePhoneClick(event) {
-      // Проверяем, является ли устройство мобильным
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      
-      if (!isMobile) {
-        // На десктопе копируем номер
-        event.preventDefault();
-        const phoneNumber = '+79001234567';
-        navigator.clipboard.writeText(phoneNumber).then(() => {
-          const button = document.getElementById('phoneButton');
-          button.classList.add('copied');
-          setTimeout(() => {
-            button.classList.remove('copied');
-          }, 2000);
-        });
-      }
-      // На мобильных устройствах просто открывается звонок
-    }
-  </script>
 </body>
 </html>
