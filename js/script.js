@@ -153,69 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    let touchStartX = 0;
-    let touchEndX = 0;
-    let touchStartY = 0;
-    let touchEndY = 0;
-    let isSwiping = false; 
-
-    if (track) {
-        track.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            touchStartY = e.changedTouches[0].screenY;
-            isAnimating = false; 
-            isSwiping = false; 
-            stopAutoSlide(); 
-        }, { passive: false });
-
-        track.addEventListener('touchmove', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            touchEndY = e.changedTouches[0].screenY;
-
-            const diffX = touchStartX - touchEndX;
-            const diffY = touchStartY - touchEndY;
-
-            if (!isSwiping && Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) { 
-                isSwiping = true;
-            }
-            
-            if (isSwiping) {
-                e.preventDefault(); 
-            }
-        }, { passive: false });
-
-        track.addEventListener('touchend', (e) => {
-            const finalDiffX = touchStartX - e.changedTouches[0].screenX;
-            const finalDiffY = touchStartY - e.changedTouches[0].screenY;
-
-            if (isSwiping) { 
-                if (Math.abs(finalDiffX) > swipeThreshold) {
-                    if (finalDiffX > 0) {
-                        nextSlide();
-                    } else {
-                        prevSlide();
-                    }
-                }
-            } else { 
-                if (Math.abs(finalDiffX) <= 10 && Math.abs(finalDiffY) <= 10) {
-                    nextSlide(); 
-                }
-            }
-
-            touchStartX = 0;
-            touchEndX = 0;
-            touchStartY = 0;
-            touchEndY = 0;
-            isSwiping = false;
-        }, { passive: false });
-    }
-
-    if (slides.length > 0) {
-        createDots();
-        updateSlidePosition();
-        startAutoSlide();
-    }
-
+    // Удаляем обработчики свайпа и тапа
+    // Возвращаем обработчики для стрелок
     const prevButton = document.querySelector('.carousel-button.prev');
     const nextButton = document.querySelector('.carousel-button.next');
 
@@ -225,6 +164,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (nextButton) {
         nextButton.addEventListener('click', nextSlide);
+    }
+
+    if (slides.length > 0) {
+        createDots();
+        updateSlidePosition();
+        startAutoSlide();
     }
 
     // Handle window resize
@@ -354,4 +299,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.addEventListener('resize', syncPhoneButtonWidth);
     syncPhoneButtonWidth();
+
+    // JS-защита от выделения текста (кроме phone-button)
+    document.addEventListener('selectstart', function(e) {
+        if (!e.target.closest('.phone-button')) {
+            e.preventDefault();
+        }
+    });
 });
