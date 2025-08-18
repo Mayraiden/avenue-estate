@@ -1,197 +1,190 @@
 .services-section {
-    position: relative;
-    padding: var(--spacing-2xl) var(--spacing-md);
-    background:var(--primary-color-light);
-    z-index: 2;
-    overflow: hidden;
+  position: relative;
+  padding: var(--spacing-2xl) var(--spacing-md);
+  background: #FFFFFF;
+  z-index: 2;
+  overflow: hidden;
 }
 
 .services-section h2 {
-    font-size: var(--font-size-3xl);
-    margin-bottom: var(--spacing-xl);
-    color: var(--bg-color-light);
-    text-align: center;
-    line-height: 1.3;
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-xl);
+  color: var(--bg-color-light);
+  text-align: center;
+  line-height: 1.3;
 }
 
 .services-section > .section-container > p {
-    font-size: var(--font-size-lg);
-    line-height: 1.6;
-    color: var(--bg-color-light);
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto var(--spacing-2xl);
+  font-size: var(--font-size-lg);
+  line-height: 1.6;
+  color: var(--bg-color-light);
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto var(--spacing-2xl);
 }
 
 .services-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-top: var(--spacing-2xl);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: var(--spacing-sm);
 }
 
 .service-item {
-    position: relative;
-    background: var(--bg-color-light);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    transition: all var(--transition-normal);
-    box-shadow: var(--shadow-md);
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--border-color);
-    clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 70% 100%, 0% 100%);
-    transform: rotate(0deg);
-    transition: transform 0.3s ease;
-}
-
-.service-item:hover {
-    transform: rotate(0deg);
+  position: relative;
+  background: var(--bg-color-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 70% 100%, 0% 100%);
 }
 
 .service-item--image {
-    aspect-ratio: 1 / 1;
-    clip-path: none;
-    border: none;
-    box-sizing: border-box;
+  aspect-ratio: 1 / 1;
+  clip-path: none;
+  border: none;
 }
 
 .service-item--image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform var(--transition-normal);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
 }
 
 .service-item--image:hover img {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .service-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
-    color: var(--bg-color-light);
-    padding: var(--spacing-md);
-    transform: translateY(100%);
-    transition: transform var(--transition-normal);
-    display: flex;
-    align-items: flex-end;
-    height: 100%;
-    width: 100%;
-    box-sizing: border-box;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+  color: var(--bg-color-light);
+  padding: var(--spacing-md);
+  transform: translateY(100%);
+  transition: transform var(--transition-normal);
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
 }
 
 .service-item--image:hover .service-overlay {
-    transform: translateY(100%);
+  transform: translateY(0);
 }
 
 .service-overlay h3 {
-    color: var(--bg-color-light);
-    margin-bottom: 0;
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-bold);
+  color: var(--bg-color-light);
+  margin-bottom: 0;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
 }
 
+/* Стили для текстовых карточек с заменой контента */
 .service-item--text {
-    border: none;
-    padding: var(--spacing-xl);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    clip-path: none;
-    background: var(--bg-color-light);
-    aspect-ratio: 1 / 1;
+  position: relative;
+  min-height: 200px;
+  padding: var(--spacing-xl);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  clip-path: none;
+  background: var(--bg-color-light);
+  aspect-ratio: 1 / 1;
 }
 
-.service-item--text h4 {
-    font-size: var(--font-size-xl);
-    color: var(--text-color);
-    margin-bottom: var(--spacing-sm);
-    font-weight: var(--font-weight-medium);
+.service-item--text .text-content {
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 
-.service-item--text p {
-    font-size: var(--font-size-base);
-    color: var(--text-color-light);
-    line-height: 1.5;
-    margin-bottom: 0;
+.service-item--text .service-title {
+  font-size: var(--font-size-2xl);
+  color: var(--text-color);
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  padding: 0 var(--spacing-md);
+}
+
+.service-item--text .service-description {
+  font-size: var(--font-size-base);
+  color: var(--text-color-light);
+  line-height: 1.5;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  padding: 0 var(--spacing-md);
+  box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Анимация при наведении */
+.service-item--text:hover .service-title {
+  opacity: 0;
+  transform: translate(-50%, -70%);
+}
+
+.service-item--text:hover .service-description {
+  opacity: 1;
+  transform: translateY(-50%);
 }
 
 /* Адаптивность */
 @media (max-width: 1024px) {
-    .services-list {
-        grid-template-columns: repeat(2, 1fr); 
-        gap: var(--spacing-md);
-    }
+  .services-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+  }
 }
 
 @media (max-width: 768px) {
-    .services-section {
-        padding: var(--spacing-xl) var(--spacing-sm);
-    }
+  .services-section {
+    padding: var(--spacing-xl) var(--spacing-sm);
+  }
 
-    .services-section h2 {
-        font-size: var(--font-size-2xl);
-        margin-bottom: var(--spacing-lg);
-    }
+  .services-section h2 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-lg);
+  }
 
-    .services-section > .section-container > p {
-        font-size: var(--font-size-base);
-        margin-bottom: var(--spacing-xl);
-    }
+  .service-item--text {
+    min-height: 160px;
+    padding: var(--spacing-lg);
+  }
 
-    .service-item--image {
-        min-height: 200px;
-    }
+  .service-item--text .service-title {
+    font-size: var(--font-size-xl);
+  }
 
-    .service-overlay h3 {
-        font-size: var(--font-size-lg);
-    }
-
-    .service-item--text h4 {
-        font-size: var(--font-size-lg);
-    }
-
-    .service-item--text p {
-        font-size: var(--font-size-sm);
-    }
+  .service-item--text .service-description {
+    font-size: var(--font-size-sm);
+  }
 }
 
 @media (max-width: 480px) {
-    .services-section {
-        padding: var(--spacing-xl) var(--spacing-sm);
-    }
+  .services-list {
+    grid-template-columns: 1fr;
+  }
 
-    .services-section h2 {
-        font-size: var(--font-size-2xl);
-        margin-bottom: var(--spacing-lg);
-    }
-
-    .services-section > .section-container > p {
-        font-size: var(--font-size-base);
-        margin-bottom: var(--spacing-xl);
-    }
-
-    .service-item--image {
-        min-height: 200px;
-    }
-
-    .service-overlay h3 {
-        font-size: var(--font-size-lg);
-    }
-
-    .service-item--text h4 {
-        font-size: var(--font-size-lg);
-    }
-
-    .service-item--text p {
-        font-size: var(--font-size-sm);
-    }
-} 
+  .service-item--text {
+    aspect-ratio: auto;
+    min-height: 120px;
+  }
+}

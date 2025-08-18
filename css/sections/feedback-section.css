@@ -1,0 +1,78 @@
+.tg-form-section {
+  padding: 60px 20px;
+  background: #ffffff;
+}
+
+.tg-form-title {
+  text-align: center;
+  font-size: 34px;
+  margin-bottom: 25px;
+  font-weight: 700;
+  color: #2c2221;
+}
+
+.tg-form {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tg-form input,
+.tg-form select,
+.tg-form textarea {
+  padding: 14px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  background: #fafafa;
+  transition: border 0.2s, background 0.2s;
+}
+
+.tg-form input:focus,
+.tg-form select:focus,
+.tg-form textarea:focus {
+  border-color: #b89c5a;
+  background: #fff;
+  outline: none;
+}
+
+.tg-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.tg-form button {
+  background: #b89c5a;
+  color: #ffffff;
+  border: none;
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.tg-form button:hover {
+  background: #a1844c;
+}
+
+.form-notice {
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.4;
+  color: #7a7a7a;
+}
+
+.form-notice a {
+  color: #b89c5a;
+  text-decoration: underline;
+}
+
+.success-message {
+  text-align: center;
+  font-size: 18px;
+  color: #2c2221;
+  padding: 20px;
+}

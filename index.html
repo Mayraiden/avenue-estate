@@ -6,7 +6,7 @@
   <title>Александр Богачев - Риэлтор в Москве</title>
   <meta name="description" content="Профессиональные услуги риэлтора в Москве. Помощь в покупке и продаже недвижимости. Более 10 лет опыта и 200 успешных сделок.">
   <meta name="keywords" content="риэлтор, недвижимость, Москва, покупка квартиры, продажа квартиры">
-  <link rel="preload" href="/img/hero-bg.webp" as="image" type="image/jpeg" />
+  <link rel="preload" href="img/hero-bg.webp" as="image" type="image/webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=FORUM&display=swap">
@@ -16,22 +16,22 @@
   <link rel="stylesheet" href="css/sections/hero.css">
   <link rel="stylesheet" href="css/sections/white-section.css">
   <link rel="stylesheet" href="css/sections/services.css">
-  <link rel="stylesheet" href="css/sections/pink-section.css">
-  <link rel="stylesheet" href="css/sections/testimonials.css">
+  <link rel="stylesheet" href="css/sections/services-accordion.css">
+  <link rel="stylesheet" href="css/sections/feedback-section.css">
+
   <link rel="stylesheet" href="css/sections/footer.css">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
 </head>
 <body>
   <header class="header">
     <div class="header-container">
       <a href="#" class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
-        <img src="img/logo.png" alt="Логотип" class="logo-img" loading="lazy">
+        <span class="logo-text">Avenue Estate Realty</span>
       </a>
       <nav class="nav">
-        <a href="#about" class="nav-link">Обо Мне</a>
+        <a href="#about" class="nav-link">О Нас</a>
         <a href="#services" class="nav-link">Услуги</a>
-        <a href="#testimonials" class="nav-link">Отзывы</a>
         <a href="#footer" class="nav-link">Контакты</a>
       </nav>
       <button class="mobile-menu-btn" aria-label="Открыть меню" aria-expanded="false">
@@ -43,22 +43,18 @@
   </header>
 
   <main>
-    <div class="hero">
-      <section class="hero-section">
-        <div class="hero-content">
-          <h1>Ваш надежный партнер в мире недвижимости</h1>
-          <p>Профессиональные услуги по покупке, продаже и аренде недвижимости. Мы поможем вам найти идеальное жилье или выгодно продать вашу собственность.</p>
-          <a href="#services" class="cta-button">Мои услуги</a>
-        </div>
-      </section>
-    </div>
+   <div class="hero" aria-label="Главная секция">
+  <div class="hero__backdrop" 
+       aria-hidden="true"
+       data-desktop-bg="/img/hero-bg.webp"
+       data-mobile-bg="/img/hero-bg-mobile.webp"></div>
+</div>
 
-    <div class="hero-spacer"></div>
 
     <section class="white-section" id="about">
       <div class="section-container">
-        <h2>О моей работе</h2>
-        <p>Я специализируюсь на работе с недвижимостью в Москве и помогаю клиентам найти идеальное жилье или выгодно продать свою собственность. Каждая сделка - это индивидуальный подход и полное сопровождение на всех этапах.</p>
+        <h2>О нашей работе</h2>
+        <p>Представьте: вы заходите в квартиру — и сразу чувствуете: “Это оно”. Без десятка неудачных показов, без разочарований, без потраченных впустую часов. Мы берём на себя всю рутину: отбор, проверку, логистику. Вы получаете только релевантные, продуманные варианты — те, что действительно соответствуют вашей жизни, вкусу и бюджету. Потому что ваше время — слишком ценно, чтобы тратить его на неподходящее</p>
         <div class="features-grid">
           <div class="feature">
             <h3>Полное сопровождение</h3>
@@ -73,13 +69,6 @@
             <p>Помощь в согласовании цены и получении максимально выгодных условий</p>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="services-section" id="services">
-      <div class="section-container">
-        <h2>Мои услуги</h2>
-        <p>Предоставляю полный спектр услуг в сфере недвижимости с гарантией качества и безопасности сделки</p>
         <div class="services-list">
           <div class="service-item service-item--image">
             <img src="img/services/buy.jpg" alt="Покупка недвижимости" loading="lazy">
@@ -89,8 +78,8 @@
           </div>
 
           <div class="service-item service-item--text">
-            <h4>Продажа недвижимости</h4>
-            <p>Оценка стоимости, подготовка документов, поиск покупателей, проведение сделки</p>
+            <h3>5+ лет опыта</h4>
+            <p>Более пяти лет работы на рынке недвижимости Москвы</p>
           </div>
 
           <div class="service-item service-item--image">
@@ -101,8 +90,8 @@
           </div>
         
           <div class="service-item service-item--text">
-            <h4>Инвестиции в недвижимость</h4>
-            <p>Анализ рынка, подбор объектов для инвестирования, оценка доходности</p>
+            <h3>180+ сделок</h4>
+            <p>Провели более ста восьмидесяти успешных сделок с недвижимостью</p>
           </div>
 
           <div class="service-item service-item--image">
@@ -113,82 +102,114 @@
           </div>
 
           <div class="service-item service-item--text">
-            <h4>Консультации</h4>
-            <p>Профессиональные консультации по всем вопросам недвижимости</p>
+            <h3>100% довольных клиентов</h4>
+            <p>Многолетнее сотрудничество и регулярные рекомендации от клиентов</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="pink-section">
-      <div class="section-container">
-        <h2>Почему выбирают меня</h2>
-        <p>Мой подход к работе основан на профессионализме, честности и индивидуальном подходе к каждому клиенту.</p>
-        <div class="benefits-grid">
-          <div class="benefit">
-            <h3>10+ лет опыта</h3>
-            <p>Более десяти лет успешной работы на рынке недвижимости Москвы</p>
-          </div>
-          <div class="benefit">
-            <h3>200+ сделок</h3>
-            <p>Провел более двухсот успешных сделок с недвижимостью</p>
-          </div>
-          <div class="benefit">
-            <h3>98% довольных клиентов</h3>
-            <p>Почти все клиенты рекомендуют меня своим друзьям и знакомым</p>
-          </div>
-        </div>
-      </div>
-    </section>
+   <section class="services-accordion" id="services">
+  <div class="container">
+    <h2 class="section-title">УСЛУГИ</h2>
+    <p class="section-subtitle">Предоставляем полный комплекс услуг с гарантией безопасности сделки</p>
 
-    <section class="testimonials-section" id="testimonials">
-      <h2 class="testimonials-title">Отзывы клиентов</h2>
-      <p class="testimonials-description">Узнайте, что говорят мои клиенты о нашей совместной работе и достигнутых результатах.</p>
-      <div class="testimonial-carousel">
-        <div class="carousel-dots"></div>
-          <h5>Тут был лунтик</h5> 
-        <div class="testimonial-track">
-          <div class="testimonial-slide">
-            <div class="testimonial-card">
-              <div class="testimonial-image">
-                <img src="img/testimonials/testimonial1.jpg" alt="Отзыв клиента" loading="lazy">
-              </div>
-            </div>
-          </div>
-          <div class="testimonial-slide">
-            <div class="testimonial-card">
-              <div class="testimonial-image">
-                <img src="img/testimonials/testimonial2.jpg" alt="Отзыв клиента" loading="lazy">
-              </div>
-            </div>
-          </div>
-          <div class="testimonial-slide">
-            <div class="testimonial-card">
-              <div class="testimonial-image">
-                <img src="img/testimonials/testimonial3.jpg" alt="Отзыв клиента" loading="lazy">
-              </div>
-            </div>
-          </div>
-          <div class="testimonial-slide">
-            <div class="testimonial-card">
-              <div class="testimonial-image">
-                <img src="img/testimonials/testimonial3.jpg" alt="Отзыв клиента" loading="lazy">
-              </div>
-            </div>
-          </div>
-          <div class="testimonial-slide">
-            <div class="testimonial-card">
-              <div class="testimonial-image">
-                <img src="img/testimonials/testimonial3.jpg" alt="Отзыв клиента" loading="lazy">
-              </div>
-            </div>
-          </div>
+    <div class="accordion">
+
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <h3>ПРОДАЖА НЕДВИЖИМОСТИ</h3>
+          <span class="accordion-icon">+</span>
         </div>
-        <button type="button" class="carousel-button prev" aria-label="Предыдущий отзыв"></button>
-        <button type="button" class="carousel-button next" aria-label="Следующий отзыв"></button>
-        <div class="carousel-dots"></div>
+        <div class="accordion-content">
+          <p>Оценка стоимости, предпродажная подготовка объекта, регулярная отчетность, полное юридическое сопровождение до получения вами денежных средств и передачи объекта покупателю.</p>
+        </div>
       </div>
-    </section>
+
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <h3>ПОКУПКА НЕДВИЖИМОСТИ</h3>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <p>Аналитика рынка, участие в закрытых продажах, согласование индивидуальных условий, юридическая проверка объекта, сопровождение до получения ключей, возможность передачи объекта нам в управление.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <h3>ЮРИДИЧЕСКОЕ СОПРОВОЖДЕНИЕ</h3>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <p>Проверка рисков, сбор и восстановление документов, подготовка документации, контроль расчетов и передача объекта.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <h3>ОДОБРЕНИЕ ИПОТЕКИ</h3>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <p>Анализ кредитного потенциала, снижение риска отказа, подбор выгодных условий и надежной страховой компании.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <h3>ОЦЕНКА НЕДВИЖИМОСТИ</h3>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <p>Сбор актуальной статистики по рынку, прогноз изменения стоимости, рекомендация стартовой цены для максимальной выгоды.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <h3>КОНСУЛЬТАЦИЯ</h3>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <p>Разбор вашей ситуации, подбор возможных решений и рекомендации по оптимальному пути.</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<section class="tg-form-section">
+  <div class="container">
+    <h2 class="tg-form-title">Оставьте заявку</h2>
+
+    <form id="telegramForm" class="tg-form">
+      <input type="text" name="name" placeholder="Ваше имя" required>
+      <input type="tel" name="phone" placeholder="Телефон" required>
+
+      <select name="service" required>
+        <option value="" disabled selected>Выберите услугу</option>
+        <option value="Продажа недвижимости">Продажа недвижимости</option>
+        <option value="Покупка недвижимости">Покупка недвижимости</option>
+        <option value="Ипотека">Одобрение ипотеки</option>
+        <option value="Консультация">Консультация</option>
+      </select>
+
+      <textarea name="comment" placeholder="Комментарий"></textarea>
+      <button type="submit">Отправить заявку</button>
+
+      <p class="form-notice">
+        Нажимая кнопку, вы соглашаетесь с
+        <a href="/privacy" target="_blank">политикой конфиденциальности</a>
+      </p>
+    </form>
+
+    <div id="formSuccess" class="success-message" style="display:none;">
+      ✅ Спасибо! Мы свяжемся с вами в течение 15 минут
+    </div>
+  </div>
+</section>
 
   </main>
 

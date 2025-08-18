@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     const hero = document.querySelector('.hero');
-    const heroSpacer = document.querySelector('.hero-spacer');
 
     function updateHero() {
         const scrollY = window.scrollY;
@@ -30,160 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
         this.classList.add('active');
       });
-    });
-
-    const track = document.querySelector('.testimonial-track');
-    const slides = document.querySelectorAll('.testimonial-slide');
-    const carouselDotsContainer = document.querySelector('.carousel-dots');
-    
-    let currentIndex = 0;
-    let autoSlideInterval;
-    let isAnimating = false;
-    const slideDuration = 6000; // 6 seconds
-    const swipeThreshold = 50; 
-
-    function createDots() {
-        if (!carouselDotsContainer) return;
-        carouselDotsContainer.innerHTML = '';
-        slides.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.classList.add('carousel-dot');
-            dot.dataset.index = index;
-            dot.addEventListener('click', () => {
-                if (isAnimating) return;
-                currentIndex = index;
-                updateSlidePosition(true); 
-            });
-            carouselDotsContainer.appendChild(dot);
-        });
-    }
-
-    function updateDots() {
-        if (!carouselDotsContainer) return;
-        const dots = carouselDotsContainer.querySelectorAll('.carousel-dot');
-        dots.forEach((dot, index) => {
-            if (index === currentIndex) {
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
-            }
-        });
-    }
-
-    function getCssVariable(variableName) {
-        return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
-    }
-
-    function getGapValue() {
-        const trackStyle = window.getComputedStyle(track);
-        const gap = parseFloat(trackStyle.gap) || 0;
-        return gap;
-    }
-
-    function updateSlidePosition(userInteraction = false) {
-        if (!track || !slides.length) return;
-        
-        isAnimating = true; 
-
-        slides.forEach(slide => {
-            slide.classList.remove('active', 'prev', 'next');
-        });
-        
-        slides[currentIndex].classList.add('active');
-        slides[(currentIndex - 1 + slides.length) % slides.length].classList.add('prev');
-        slides[(currentIndex + 1) % slides.length].classList.add('next');
-        
-        const activeSlide = slides[currentIndex];
-        const carousel = document.querySelector('.testimonial-carousel');
-
-        if (!carousel) return;
-
-        const carouselWidth = carousel.offsetWidth;
-        const activeSlideWidth = activeSlide.offsetWidth;
-        const gap = getGapValue();
-
-        let precedingSlidesWidth = 0;
-        for (let i = 0; i < currentIndex; i++) {
-            precedingSlidesWidth += slides[i].offsetWidth + gap; 
-        }
-
-    
-        const translateX = -precedingSlidesWidth + (carouselWidth / 2) - (activeSlideWidth / 2);
-
-
-        track.style.transform = `translateX(${Math.round(translateX)}px)`;
-        
-        updateDots();
-
-        const transitionEndHandler = (e) => {
-            if (e.propertyName === 'transform') {
-                isAnimating = false;
-                track.removeEventListener('transitionend', transitionEndHandler);
-            }
-        };
-        track.addEventListener('transitionend', transitionEndHandler);
-
-        if (userInteraction) {
-            startAutoSlide(); 
-        }
-    }
-
-    function nextSlide() {
-        if (isAnimating) return;
-        currentIndex = (currentIndex + 1) % slides.length;
-        updateSlidePosition(true); 
-    }
-
-    function prevSlide() {
-        if (isAnimating) return;
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        updateSlidePosition(true); 
-    }
-
-    function startAutoSlide() {
-        if (autoSlideInterval) {
-            clearInterval(autoSlideInterval);
-        }
-        autoSlideInterval = setInterval(nextSlide, slideDuration);
-    }
-
-    function stopAutoSlide() {
-        if (autoSlideInterval) {
-            clearInterval(autoSlideInterval);
-        }
-    }
-
-    // Удаляем обработчики свайпа и тапа
-    // Возвращаем обработчики для стрелок
-    const prevButton = document.querySelector('.carousel-button.prev');
-    const nextButton = document.querySelector('.carousel-button.next');
-
-    if (prevButton) {
-        prevButton.addEventListener('click', prevSlide);
-    }
-
-    if (nextButton) {
-        nextButton.addEventListener('click', nextSlide);
-    }
-
-    if (slides.length > 0) {
-        createDots();
-        updateSlidePosition();
-        startAutoSlide();
-    }
-
-    // Handle window resize
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            updateSlidePosition();
-        }, 250);
-    });
-
-    // Cleanup
-    window.addEventListener('beforeunload', () => {
-        stopAutoSlide();
     });
 
     // Мобильное меню (бургер)
@@ -306,4 +151,113 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
         }
     });
+});
+
+// Анимация счетчиков
+document.addEventListener('DOMContentLoaded', () => {
+  const counters = document.querySelectorAll('[data-counter]');
+  
+  const animateCounters = () => {
+    counters.forEach(counter => {
+      const target = parseInt(counter.dataset.counter);
+      const duration = 2000;
+      const startTime = performance.now();
+      
+      const updateCounter = (currentTime) => {
+        const elapsedTime = currentTime - startTime;
+        const progress = Math.min(elapsedTime / duration, 1);
+        const value = Math.floor(progress * target);
+        
+        counter.textContent = value === target ? `${value}+` : value;
+        
+        if (progress < 1) {
+          requestAnimationFrame(updateCounter);
+        }
+      };
+      
+      requestAnimationFrame(updateCounter);
+    });
+  };
+  
+  // Запуск анимации при попадании в viewport
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounters();
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  const heroStats = document.querySelector('.hero__stats');
+  if (heroStats) {
+    observer.observe(heroStats);
+  }
+});
+
+document.querySelectorAll('.accordion-header').forEach(header => {
+  header.addEventListener('click', () => {
+    header.parentElement.classList.toggle('active');
+  });
+});
+
+document.getElementById('telegramForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  // Ваши данные
+  const botToken = 'ВАШ_ТОКЕН_БОТА';
+  const chatId = 'ВАШ_CHAT_ID'; // Узнать через @getmyid_bot
+  
+  // Формируем сообщение
+  const formData = new FormData(this);
+  const text = `📌 Новая заявка:\n\n👤 Имя: ${formData.get('name')}\n📞 Телефон: ${formData.get('phone')}\n🔧 Услуга: ${formData.get('service')}\n📝 Комментарий: ${formData.get('comment') || '—'}`;
+  
+  // Отправляем в Telegram
+  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: text,
+      parse_mode: 'HTML'
+    })
+  })
+  .then(() => {
+    // Показываем сообщение об успехе
+    document.getElementById('telegramForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+    
+    // Очищаем форму (опционально)
+    this.reset();
+  })
+  .catch(() => alert('Ошибка отправки. Позвоните нам напрямую.'));
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const backdrop = document.querySelector('.hero__backdrop');
+  if (!backdrop) return;
+
+  // Определяем какое изображение загружать
+  const bgUrl = window.innerWidth <= 768 
+    ? backdrop.getAttribute('data-mobile-bg') 
+    : backdrop.getAttribute('data-desktop-bg');
+
+  const img = new Image();
+  img.src = bgUrl;
+  img.onload = function() {
+    backdrop.style.backgroundImage = `linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%), url('${bgUrl}')`;
+    backdrop.classList.add('loaded');
+  };
+});
+
+// Реакция на изменение размера окна
+window.addEventListener('resize', function() {
+  const backdrop = document.querySelector('.hero__backdrop.loaded');
+  if (!backdrop) return;
+  
+  const newBgUrl = window.innerWidth <= 768
+    ? backdrop.getAttribute('data-mobile-bg')
+    : backdrop.getAttribute('data-desktop-bg');
+    
+  backdrop.style.backgroundImage = `linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%), url('${newBgUrl}')`;
 });
