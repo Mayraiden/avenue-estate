@@ -237,27 +237,41 @@ document.addEventListener('DOMContentLoaded', function() {
   const backdrop = document.querySelector('.hero__backdrop');
   if (!backdrop) return;
 
-  // Определяем какое изображение загружать
-  const bgUrl = window.innerWidth <= 768 
-    ? backdrop.getAttribute('data-mobile-bg') 
-    : backdrop.getAttribute('data-desktop-bg');
+  const gradientDesktop = 'linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%)';
+  const gradientMobile  = 'linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 100%)';
 
-  const img = new Image();
-  img.src = bgUrl;
-  img.onload = function() {
-    backdrop.style.backgroundImage = `linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%), url('${bgUrl}')`;
-    backdrop.classList.add('loaded');
-  };
+  function updateBackground() {
+    const isMobile = window.innerWidth <= 768;
+    const bgUrl = isMobile ? backdrop.getAttribute('data-mobile-bg') : backdrop.getAttribute('data-desktop-bg');
+    const gradient = isMobile ? gradientMobile : gradientDesktop;
+
+    // Если фон уже такой же, ничего не делаем
+    if (backdrop.style.backgroundImage.includes(bgUrl)) return;
+
+    const img = new Image();
+    img.src = bgUrl;
+    img.onload = function() {
+      backdrop.style.backgroundImage = `${gradient}, url('${bgUrl}')`;
+      backdrop.classList.add('loaded');
+    };
+  }
+
+  updateBackground();
+
+  window.addEventListener('resize', function() {
+    updateBackground();
+  });
 });
 
-// Реакция на изменение размера окна
-window.addEventListener('resize', function() {
-  const backdrop = document.querySelector('.hero__backdrop.loaded');
-  if (!backdrop) return;
-  
-  const newBgUrl = window.innerWidth <= 768
-    ? backdrop.getAttribute('data-mobile-bg')
-    : backdrop.getAttribute('data-desktop-bg');
-    
-  backdrop.style.backgroundImage = `linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%), url('${newBgUrl}')`;
+document.addEventListener('DOMContentLoaded', () => {
+  const images = [
+    'img/services/buy.webp',
+    'img/services/mortgage.webp',
+    'img/services/invest.webp'
+  ];
+
+  images.forEach(src => {
+    const img = new Image();
+    img.src = src;
+  });
 });

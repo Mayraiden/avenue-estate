@@ -1,26 +1,24 @@
 /* ===== Hero Section ===== */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh; /* 100% высоты видимой области на iPhone */
   overflow: hidden;
   display: flex;
   align-items: center;
   isolation: isolate;
+  padding-top: 0; /* для мобильных добавим через медиазапрос */
 }
 
-/* Базовый стиль фона (десктоп) */
 .hero__backdrop {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background:
-    linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%),
-    url("/img/hero-bg.webp");
+  background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%), url("/img/hero-bg.webp");
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   background-repeat: no-repeat;
   opacity: 0;
-  transition: opacity 0.8s ease;
+  transition: opacity 0.8s ease, background-image 0.3s ease;
 }
 
 /* После загрузки */
@@ -28,24 +26,20 @@
   opacity: 1;
 }
 
-/* Мобильная версия (другое изображение) */
+/* Мобильная версия (до 768px) */
 @media (max-width: 768px) {
   .hero__backdrop {
-    background:
-      linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 100%),
-      url("/img/hero-bg-mobile.webp");
-    background-position: center 30%; /* Оптимально для логотипа */
+    background-position: center 40%;
   }
-  
   .hero {
     align-items: flex-start;
     padding-top: 18vh;
   }
 }
 
-/* Для маленьких экранов */
+/* Маленькие экраны (до 480px) */
 @media (max-width: 480px) {
   .hero__backdrop {
-    background-position: center 35%;
+    background-position: center 50%;
   }
 }
