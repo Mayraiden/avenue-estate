@@ -1,6 +1,10 @@
 .tg-form-section {
   padding: 60px 20px;
-  background: #ffffff;
+  background: var(--primary-color);
+  opacity: 1;
+  transform: none;
+  transition: none;
+  will-change: auto;
 }
 
 .tg-form-title {
@@ -8,7 +12,7 @@
   font-size: 34px;
   margin-bottom: 25px;
   font-weight: 700;
-  color: #2c2221;
+  color:var(--text-color-on-dark);
 }
 
 .tg-form {
@@ -73,6 +77,92 @@
 .success-message {
   text-align: center;
   font-size: 18px;
-  color: #2c2221;
+  color: var(--text-color-on-dark);
   padding: 20px;
+}
+
+/* Стили для валидации */
+.tg-form input:invalid,
+.tg-form select:invalid,
+.tg-form textarea:invalid {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
+}
+
+.tg-form input:valid,
+.tg-form select:valid,
+.tg-form textarea:valid {
+  border-color: #27ae60;
+  box-shadow: 0 0 0 2px rgba(39, 174, 96, 0.2);
+}
+
+.tg-form input:focus,
+.tg-form select:focus,
+.tg-form textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(212, 184, 117, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* Стили для ошибок */
+.phone-error {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background: rgba(231, 76, 60, 0.1);
+  border-radius: 6px;
+  border-left: 3px solid #e74c3c;
+  animation: slideIn 0.3s ease;
+}
+
+/* Анимация появления ошибки */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Стили для успешной валидации */
+.tg-form input.valid,
+.tg-form select.valid,
+.tg-form textarea.valid {
+  border-color: #27ae60;
+  background: rgba(39, 174, 96, 0.02);
+}
+
+/* Стили для невалидных полей */
+.tg-form input.invalid,
+.tg-form select.invalid,
+.tg-form textarea.invalid {
+  border-color: #e74c3c;
+  background: rgba(231, 76, 60, 0.02);
+}
+
+/* Плейсхолдер для поля телефона */
+.tg-form input[name="phone"]::placeholder {
+  color: #999;
+  font-size: 14px;
+}
+
+/* Счетчик символов для комментария */
+.tg-form textarea {
+  position: relative;
+}
+
+.tg-form textarea::after {
+  content: attr(data-length) " / 500";
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  font-size: 12px;
+  color: #999;
+  pointer-events: none;
 }

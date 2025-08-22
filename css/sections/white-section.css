@@ -3,6 +3,9 @@
     padding: var(--spacing-2xl) var(--spacing-md);
     background: #ffffff;
     z-index: 2;
+    content-visibility: auto;
+    contain: layout style paint;
+    margin-top: 100dvh;
 }
 
 .white-section h2 {

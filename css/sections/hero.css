@@ -1,24 +1,33 @@
 /* ===== Hero Section ===== */
 .hero {
-  position: relative;
-  min-height: 100dvh; /* 100% высоты видимой области на iPhone */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  min-height: 100dvh;
   overflow: hidden;
   display: flex;
   align-items: center;
   isolation: isolate;
-  padding-top: 0; /* для мобильных добавим через медиазапрос */
+  padding-top: 0;
+  z-index: 1;
+  pointer-events: none;
+  content-visibility: auto;
+  contain: layout style paint;
 }
 
 .hero__backdrop {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%), url("/img/hero-bg.webp");
+  background: url("/img/hero-bg.webp"); 
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   opacity: 0;
   transition: opacity 0.8s ease, background-image 0.3s ease;
+  filter: saturate(1.1) contrast(1.05) brightness(1.25);
 }
 
 /* После загрузки */

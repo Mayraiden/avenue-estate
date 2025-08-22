@@ -4,6 +4,10 @@
   background: #FFFFFF;
   z-index: 2;
   overflow: hidden;
+  opacity: 1;
+  transform: none;
+  transition: none;
+  will-change: auto;
 }
 
 .services-section h2 {
