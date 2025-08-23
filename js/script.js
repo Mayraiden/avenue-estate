@@ -1,89 +1,161 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const hero = document.querySelector('.hero');
 
-    function updateHero() {
-        const scrollY = window.scrollY;
-        const heroHeight = hero.offsetHeight;
-        
-        const progress = Math.min(scrollY / heroHeight, 1);
-        hero.style.opacity = 1 - progress;
+document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.querySelector('.nav');
+    if (window.innerWidth <= 768 && nav) {
+        nav.style.display = 'none';
     }
 
-    hero.style.transition = 'opacity 0.3s ease-out';
+    const hero = document.querySelector('.hero');
+    
+    if (hero) {
+        function updateHero() {
+            const scrollY = window.scrollY;
+            const heroHeight = hero.offsetHeight;
+            
+            const progress = Math.min(scrollY / heroHeight, 1);
+            hero.style.opacity = 1 - progress;
+        }
 
-    window.addEventListener('scroll', () => {
-        requestAnimationFrame(updateHero);
-    });
+        hero.style.transition = 'opacity 0.3s ease-out';
+        updateHero();
 
-    updateHero();
+        window.addEventListener('scroll', () => {
+            requestAnimationFrame(updateHero);
+        });
+    }
 
     function scrollToSection(sectionId) {
-      document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        const element = document.getElementById(sectionId);
+        if (element) {
+            const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
+            const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - headerHeight - 20;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
     }
 
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const sectionId = this.getAttribute('href').substring(1);
-        scrollToSection(sectionId);
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        this.classList.add('active');
-      });
+    // Функция для закрытия мобильного меню и сброса бургера
+    function closeMobileMenu() {
+        const nav = document.querySelector('.nav');
+        const burger = document.querySelector('.mobile-menu-btn');
+        
+        if (nav && nav.classList.contains('open')) {
+            nav.classList.remove('open');
+            burger.classList.remove('active');
+            burger.setAttribute('aria-expanded', 'false');
+            
+            // Небольшая задержка перед скрытием элемента для плавности анимации
+            setTimeout(() => {
+                if (window.innerWidth <= 768) {
+                    nav.style.display = 'none';
+                }
+            }, 700);
+        }
+    }
+
+    document.querySelectorAll('.nav-link[href^="#"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const sectionId = this.getAttribute('href').substring(1);
+            
+            scrollToSection(sectionId);
+            
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+            
+            closeMobileMenu();
+        });
     });
 
-    // Мобильное меню (бургер)
+    function updateActiveLink() {
+        const sections = document.querySelectorAll('section[id]');
+        const scrollY = window.pageYOffset;
+        const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
+
+        sections.forEach(section => {
+            const sectionHeight = section.offsetHeight;
+            const sectionTop = section.offsetTop - headerHeight - 100;
+            const sectionId = section.getAttribute('id');
+
+            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }
+
     const burger = document.querySelector('.mobile-menu-btn');
-    const nav = document.querySelector('.nav');
-    let navCloseTimeout;
+    const navMenu = document.querySelector('.nav');
 
-    function closeMenu() {
-      nav.classList.remove('open');
-      burger.setAttribute('aria-expanded', 'false');
-      clearTimeout(navCloseTimeout);
-      navCloseTimeout = setTimeout(() => {
-        nav.classList.add('nav--hidden');
-      }, 750); // чуть больше, чем transition
+    if (burger && navMenu) {
+        burger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            if (navMenu.classList.contains('open')) {
+                // Закрываем меню
+                navMenu.classList.remove('open');
+                this.classList.remove('active');
+                this.setAttribute('aria-expanded', 'false');
+                
+                setTimeout(() => {
+                    if (window.innerWidth <= 768) {
+                        navMenu.style.display = 'none';
+                    }
+                }, 700);
+            } else {
+                // Открываем меню
+                navMenu.style.display = 'flex';
+                this.classList.add('active');
+                this.setAttribute('aria-expanded', 'true');
+                
+                // Небольшая задержка для применения анимации
+                setTimeout(() => {
+                    navMenu.classList.add('open');
+                }, 10);
+            }
+        });
+
+        // Закрытие меню по клику на ссылку внутри него
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => closeMobileMenu());
+        });
+
+        document.addEventListener('click', function(e) {
+            if (navMenu.classList.contains('open') && 
+                !navMenu.contains(e.target) && 
+                !burger.contains(e.target)) {
+                closeMobileMenu();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+                closeMobileMenu();
+            }
+        });
+
+        // Close menu on resize to desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                closeMobileMenu();
+                // Возвращаем navbar в исходное состояние для десктопа
+                navMenu.style.display = '';
+                navMenu.classList.remove('open');
+                burger.classList.remove('active');
+            } else if (!navMenu.classList.contains('open')) {
+                // Если на мобилке меню закрыто, убедимся, что оно скрыто правильно
+                navMenu.style.display = 'none';
+            }
+        });
     }
-
-    function openMenu() {
-      nav.classList.remove('nav--hidden');
-      nav.classList.add('open');
-      burger.setAttribute('aria-expanded', 'true');
-      clearTimeout(navCloseTimeout);
-    }
-
-    if (burger && nav) {
-      burger.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if (nav.classList.contains('open')) {
-          closeMenu();
-        } else {
-          openMenu();
-        }
-      });
-
-      // Закрытие по клику вне меню
-      document.addEventListener('click', function(e) {
-        if (nav.classList.contains('open') && !nav.contains(e.target) && !burger.contains(e.target)) {
-          closeMenu();
-        }
-      });
-
-      // Закрытие по ESC
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && nav.classList.contains('open')) {
-          closeMenu();
-        }
-      });
-
-      // Автоматически закрывать меню при ресайзе на десктоп
-      window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-          closeMenu();
-        }
-      });
-    }
-
     // Обработчик для phoneButton: копирование на десктопе, звонок на мобильных, смена текста
     const phoneButton = document.getElementById('phoneButton');
     if (phoneButton) {
@@ -145,9 +217,9 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', syncPhoneButtonWidth);
     syncPhoneButtonWidth();
 
-    // JS-защита от выделения текста (кроме phone-button)
+    // JS-защита от выделения текста только для элементов с классом .no-select
     document.addEventListener('selectstart', function(e) {
-        if (!e.target.closest('.phone-button')) {
+        if (e.target.closest('.no-select')) {
             e.preventDefault();
         }
     });
@@ -180,38 +252,47 @@ document.addEventListener('DOMContentLoaded', () => {
       if (phoneInput && phoneError) {
         // Функция для форматирования номера телефона
         function formatPhoneNumber(value) {
-          // Убираем все кроме цифр
-          const numbers = value.replace(/\D/g, '');
-          
-          // Если номер начинается с 8, заменяем на 7
-          let formatted = numbers;
-          if (formatted.startsWith('8') && formatted.length === 11) {
-            formatted = '7' + formatted.substring(1);
+          let numbers = value.replace(/\D/g, '');
+          if (numbers.startsWith('8') && numbers.length === 11) {
+            numbers = '7' + numbers.substring(1);
           }
-          
-          // Добавляем +7 если номер начинается с 7 и имеет 11 цифр
-          if (formatted.startsWith('7') && formatted.length === 11) {
-            formatted = '+' + formatted;
+          if (numbers.startsWith('7') && numbers.length === 11) {
+            numbers = '+' + numbers;
           }
-          
           // Форматируем номер в виде +7(999)123-45-67
-          if (formatted.length >= 1) {
-            if (formatted.startsWith('+7') && formatted.length >= 11) {
-              const code = formatted.substring(2, 5);
-              const part1 = formatted.substring(5, 8);
-              const part2 = formatted.substring(8, 10);
-              const part3 = formatted.substring(10, 12);
-              formatted = `+7(${code})${part1}-${part2}-${part3}`;
-            } else if (formatted.startsWith('7') && formatted.length >= 11) {
-              const code = formatted.substring(1, 4);
-              const part1 = formatted.substring(4, 7);
-              const part2 = formatted.substring(7, 9);
-              const part3 = formatted.substring(9, 11);
-              formatted = `+7(${code})${part1}-${part2}-${part3}`;
+          if (numbers.startsWith('+7')) {
+            let formatted = '+7';
+            if (numbers.length > 2) {
+              formatted += '(' + numbers.substring(2, 5);
             }
+            if (numbers.length > 5) {
+              formatted += ')' + numbers.substring(5, 8);
+            }
+            if (numbers.length > 8) {
+              formatted += '-' + numbers.substring(8, 10);
+            }
+            if (numbers.length > 10) {
+              formatted += '-' + numbers.substring(10, 12);
+            }
+            return formatted;
           }
-          
-          return formatted;
+          if (numbers.startsWith('7')) {
+            let formatted = '+7';
+            if (numbers.length > 1) {
+              formatted += '(' + numbers.substring(1, 4);
+            }
+            if (numbers.length > 4) {
+              formatted += ')' + numbers.substring(4, 7);
+            }
+            if (numbers.length > 7) {
+              formatted += '-' + numbers.substring(7, 9);
+            }
+            if (numbers.length > 9) {
+              formatted += '-' + numbers.substring(9, 11);
+            }
+            return formatted;
+          }
+          return numbers;
         }
         
         // Функция для валидации номера
@@ -286,7 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
         
-        // Ваши данные
+        // Ваши данные (Внимание: хранить токен и chatId на фронте небезопасно!)
         const botToken = '8068709438:AAFcvRxBQS48WTcdWTX8yJ3yhMZDMpmqXNY';
         const chatId = '1924942515'; // Узнать через @getmyid_bot
         
@@ -393,33 +474,34 @@ document.addEventListener('DOMContentLoaded', () => {
       let autoSlideInterval = setInterval(() => {
         goToSlide(currentSlide + 1);
       }, 5000);
-      
+
       // Останавливаем автопрокрутку при взаимодействии
       const galleryContainer = document.querySelector('.gallery-container');
       if (galleryContainer) {
         galleryContainer.addEventListener('mouseenter', () => {
           clearInterval(autoSlideInterval);
         });
-        
         galleryContainer.addEventListener('mouseleave', () => {
           autoSlideInterval = setInterval(() => {
             goToSlide(currentSlide + 1);
           }, 5000);
         });
       }
-      
+
+      // Очистка интервала при уходе со страницы
+      window.addEventListener('beforeunload', () => {
+        clearInterval(autoSlideInterval);
+      });
+
       // Свайп на мобильных устройствах
       let startX = 0;
       let endX = 0;
-      
       gallerySlider.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
       });
-      
       gallerySlider.addEventListener('touchend', (e) => {
         endX = e.changedTouches[0].clientX;
         const diff = startX - endX;
-        
         if (Math.abs(diff) > 50) { // Минимальное расстояние для свайпа
           if (diff > 0) {
             goToSlide(currentSlide + 1); // Свайп влево
@@ -428,7 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       });
-      
+
       // Инициализация
       goToSlide(0);
     }
