@@ -713,3 +713,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
+
+
+// js/script.js
+
+document.addEventListener("DOMContentLoaded", () => {
+  const backdrop = document.querySelector(".hero__backdrop");
+  if (!backdrop) return;
+
+  const mobileBg = backdrop.dataset.mobileBg;
+  const desktopBg = backdrop.dataset.desktopBg;
+
+  function setBackground() {
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const newBg = isMobile ? mobileBg : desktopBg;
+
+    // если фон уже установлен — не перезаписываем
+    if (backdrop.style.backgroundImage.includes(newBg)) return;
+
+    const img = new Image();
+    img.src = newBg;
+    img.onload = () => {
+      backdrop.style.backgroundImage = `url(${newBg})`;
+      backdrop.classList.add("loaded");
+    };
+  }
+
+  // первоначальная установка
+  setBackground();
+
+  // реагируем на ресайз
+  window.addEventListener("resize", setBackground);
+});

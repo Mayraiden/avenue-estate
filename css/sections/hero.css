@@ -21,7 +21,6 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: url("/img/hero-bg.webp"); 
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -30,6 +29,7 @@
   filter: saturate(1.1) contrast(1.05) brightness(1.25);
   will-change: opacity;
 }
+
 
 /* После загрузки */
 .hero__backdrop.loaded {
