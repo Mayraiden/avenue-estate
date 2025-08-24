@@ -79,7 +79,7 @@
 }
 
 .nav-link {
-  color: var(--text-color-light);
+  color: #998557;
   text-decoration: none;
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-medium);

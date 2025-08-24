@@ -27,6 +27,12 @@
   <meta property="og:image" content="https://avenue-estate.ru/img/og-image.jpg">
   <meta property="og:site_name" content="Avenue Estate Realty">
   <meta property="og:locale" content="ru_RU">
+  
+  <!-- Twitter Card для лучшего отображения в Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Avenue Estate Realty - Риэлторы в Москве">
+  <meta name="twitter:description" content="Профессиональные услуги риэлтора в Москве. Помощь в покупке и продаже недвижимости.">
+  <meta name="twitter:image" content="https://avenue-estate.ru/img/og-image.jpg">
     
   <!-- Canonical URL для избежания дублирования контента -->
   <link rel="canonical" href="https://avenue-estate.ru">
@@ -40,12 +46,30 @@
   <link rel="manifest" href="/img/Favicon Generator/site.webmanifest" />
   
   <!-- Preload критических ресурсов -->
-  <link rel="preload" href="img/hero-bg.webp" as="image" type="image/webp">
+  <link rel="preload" href="img/hero-bg.webp" as="image" type="image/webp" fetchpriority="high">
+  <link rel="preload" href="img/hero-bg-mobile.webp" as="image" type="image/webp" media="(max-width: 768px)">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://api.telegram.org">
   
-  <!-- Шрифты -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=FORUM&display=swap">
+  <!-- Предзагрузка критических шрифтов -->
+  <link rel="preload" href="/fonts/Forum-Regular.ttf" as="font" type="font/ttf" crossorigin fetchpriority="high">
+  
+  <!-- Предзагрузка критического JavaScript -->
+  <link rel="preload" href="/js/script.js" as="script">
+  
+  <!-- Локальные шрифты вместо Google Fonts для улучшения производительности -->
+  <style>
+    /* Подключение локальных шрифтов */
+    @font-face {
+      font-family: 'Forum';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: local('Forum'), 
+           url('/fonts/Forum-Regular.ttf') format('truetype');
+    }
+  </style>
   
   <!-- Структурированные данные (JSON-LD) для улучшения SEO -->
   <script type="application/ld+json">
@@ -71,30 +95,35 @@
     "serviceType": "Риэлторские услуги"
   }
   </script>
+  
+  <!-- Оптимизация кэширования -->
+  <meta http-equiv="Cache-Control" content="max-age=31536000, immutable">
+  <meta http-equiv="Expires" content="31536000">
 
-  <!-- CSS стили -->
-  <link rel="stylesheet" href="css/settings.css">
-  <link rel="stylesheet" href="css/components/buttons.css">
-  <link rel="stylesheet" href="css/sections/header.css">
-  <link rel="stylesheet" href="css/sections/hero.css">
-  <link rel="stylesheet" href="css/sections/white-section.css">
-  <link rel="stylesheet" href="css/sections/services.css">
-  <link rel="stylesheet" href="css/sections/services-accordion.css">
-  <link rel="stylesheet" href="css/sections/photo-gallery.css">
-  <link rel="stylesheet" href="css/sections/feedback-section.css">
-  <link rel="stylesheet" href="css/sections/footer.css">
-  <link rel="stylesheet" href="css/style.css">
-</head>
+  <!-- Критические CSS стили -->
+  <link rel="stylesheet" href="css/settings.css" media="all" fetchpriority="high">
+  <link rel="stylesheet" href="css/style.css" media="all" fetchpriority="high">
+  <link rel="stylesheet" href="css/components/buttons.css" media="all">
+  <link rel="stylesheet" href="css/sections/header.css" media="all">
+  <link rel="stylesheet" href="css/sections/hero.css" media="all">
+  
+  <!-- Отложенная загрузка неприоритетных стилей -->
+  <link rel="stylesheet" href="css/sections/white-section.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/sections/services.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/sections/services-accordion.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/sections/photo-gallery.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/sections/feedback-section.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/sections/footer.css" media="print" onload="this.media='all'">
 </head>
 <body>
   <header class="header">
     <div class="header-container">
-      <a href="#" class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+      <a href="#" class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" aria-label="Avenue Estate Realty - вернуться к началу страницы">
         <span class="logo-text">Avenue Estate Realty</span>
       </a>
-      <nav class="nav">
-        <a href="#about" class="nav-link">О Нас</a>
-        <a href="#services" class="nav-link">Услуги</a>
+      <nav class="nav" role="navigation" aria-label="Основная навигация">
+        <a href="#about" class="nav-link" aria-current="false">О Нас</a>
+        <a href="#services" class="nav-link" aria-current="false">Услуги</a>
         <a href="#gallery" class="nav-link">Фотогалерея</a>
         <a href="#footer" class="nav-link">Контакты</a>
       </nav>
@@ -121,38 +150,38 @@
         <p>Представьте: вы заходите в квартиру — и сразу чувствуете: “Это оно”. Без десятка неудачных показов, без разочарований, без потраченных впустую часов. Мы берём на себя всю рутину: отбор, проверку, логистику. Вы получаете только релевантные, продуманные варианты — те, что действительно соответствуют вашей жизни, вкусу и бюджету. Потому что ваше время — слишком ценно, чтобы тратить его на неподходящее</p>
         <div class="services-list">
           <div class="service-item service-item--image">
-            <img src="img/services/buy.webp" alt="Покупка недвижимости" loading="lazy" width="300" height="300" style="background:#eee;">
+            <img src="img/services/buy.webp" alt="Покупка недвижимости" loading="lazy" width="300" height="300" style="background:#eee;" fetchpriority="low" decoding="async">
             <div class="service-overlay">
               <h3>Покупка и продажа недвижимости</h3>
             </div>
           </div>
 
           <div class="service-item service-item--text">
-            <h3>5+ лет опыта</h4>
+            <h3>5+ лет опыта</h3>
             <p>Более пяти лет работы на рынке недвижимости Москвы</p>
           </div>
 
           <div class="service-item service-item--image">
-            <img src="img/services/mortgage.webp" alt="Ипотечное сопровождение" loading="lazy" width="300" height="300" style="background:#eee;">
+            <img src="img/services/mortgage.webp" alt="Ипотечное сопровождение" loading="lazy" width="300" height="300" style="background:#eee;" fetchpriority="low" decoding="async">
             <div class="service-overlay">
               <h3>Ипотечное сопровождение</h3>
             </div>
           </div>
         
           <div class="service-item service-item--text">
-            <h3>180+ сделок</h4>
+            <h3>180+ сделок</h3>
             <p>Провели более ста восьмидесяти успешных сделок с недвижимостью</p>
           </div>
 
           <div class="service-item service-item--image">
-            <img src="img/services/invest.webp" alt="Юридическая проверка" loading="lazy" width="300" height="300" style="background:#eee;">
+            <img src="img/services/invest.webp" alt="Юридическая проверка" loading="lazy" width="300" height="300" style="background:#eee;" fetchpriority="low" decoding="async">
             <div class="service-overlay">
               <h3>Юридическая проверка</h3>
             </div>
           </div>
 
           <div class="service-item service-item--text">
-            <h3>100% довольных клиентов</h4>
+            <h3>100% довольных клиентов</h3>
             <p>Многолетнее сотрудничество и регулярные рекомендации от клиентов</p>
           </div>
         </div>
@@ -230,12 +259,12 @@
   </div>
 </section>
 
-<section class="photo-gallery" id="gallery">
+<section class="photo-gallery" id="gallery" aria-label="Фотогалерея">
   <div class="container">
     <h2 class="section-title">Фотогалерея</h2>
     <p class="section-subtitle">Наша работа в реальном времени</p>
     
-    <div class="gallery-container">
+    <div class="gallery-container" role="region" aria-roledescription="карусель" aria-label="Галерея объектов недвижимости">
       <button class="gallery-nav gallery-nav--prev" aria-label="Предыдущее фото">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -245,7 +274,7 @@
       <div class="gallery-slider">
         <div class="gallery-track">
           <div class="gallery-slide">
-            <img src="img/company/company1.webp" alt="Объект недвижимости 1" loading="lazy" width="400" height="300">
+            <img src="img/company/company1.webp" alt="Объект недвижимости 1" loading="lazy" decoding="async" width="400" height="300" fetchpriority="low">
             <div class="slide-overlay">
               <h3>Дом с участком</h3>
               <p>Просторный участок, развитая инфраструктура</p>
@@ -253,7 +282,7 @@
           </div>
           
           <div class="gallery-slide">
-            <img src="img/company/company2.webp" alt="Объект недвижимости 2" loading="lazy" width="400" height="300">
+            <img src="img/company/company2.webp" alt="Объект недвижимости 2" loading="lazy" decoding="async" width="400" height="300" fetchpriority="low">
             <div class="slide-overlay">
               <h3>Инвестиционная недвижимость</h3>
               <p>Высокая доходность, стабильный рост</p>
@@ -261,7 +290,7 @@
           </div>
           
           <div class="gallery-slide">
-            <img src="img/company/company3.webp" alt="Объект недвижимости 3" loading="lazy" width="400" height="300">
+            <img src="img/company/company3.webp" alt="Объект недвижимости 3" loading="lazy" decoding="async" width="400" height="300" fetchpriority="low">
             <div class="slide-overlay">
               <h3>Элитная квартира</h3>
               <p>Премиум класс, авторский дизайн</p>
@@ -269,7 +298,7 @@
           </div>
           
           <div class="gallery-slide">
-            <img src="img/company/company4.webp" alt="Объект недвижимости 4" loading="lazy" width="400" height="300">
+            <img src="img/company/company4.webp" alt="Объект недвижимости 4" loading="lazy" decoding="async" width="400" height="300" fetchpriority="low">
             <div class="slide-overlay">
               <h3>Таунхаус</h3>
               <p>Комфорт частного дома в городской среде</p>
@@ -277,7 +306,7 @@
           </div>
           
           <div class="gallery-slide">
-            <img src="img/company/company5.webp" alt="Объект недвижимости 5" loading="lazy" width="400" height="300">
+            <img src="img/company/company5.webp" alt="Объект недвижимости 5" loading="lazy" decoding="async" width="400" height="300" fetchpriority="low">
             <div class="slide-overlay">
               <h3>Комфортный дом</h3>
               <p>Уютный дом с большим садом</p>
@@ -342,7 +371,7 @@
 
   </main>
 
-  <footer class="footer" id="footer">
+  <footer class="footer" id="footer" role="contentinfo" aria-label="Контактная информация">
     <div class="footer-container">
       <div class="footer-content">
         <div class="footer-spacer"></div>

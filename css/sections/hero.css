@@ -28,6 +28,7 @@
   opacity: 0;
   transition: opacity 0.8s ease, background-image 0.3s ease;
   filter: saturate(1.1) contrast(1.05) brightness(1.25);
+  will-change: opacity;
 }
 
 /* После загрузки */

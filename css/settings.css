@@ -40,8 +40,8 @@
   --z-sticky: 100;
 
   /* === Типографика === */
-  --font-main: 'FORUM', serif;
-  --font-headings: 'FORUM', serif;
+  --font-main: 'Forum', serif;
+  --font-headings: 'Forum', serif;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;

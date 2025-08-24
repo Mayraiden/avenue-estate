@@ -1,5 +1,38 @@
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Оптимизация загрузки всех изображений на странице
+  function optimizeImages() {
+    // Получаем все изображения на странице
+    const images = document.querySelectorAll('img:not([loading])');
+    
+    // Настраиваем IntersectionObserver для ленивой загрузки
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          
+          // Устанавливаем атрибуты для оптимизации
+          if (!img.hasAttribute('loading')) {
+            img.loading = 'lazy';
+          }
+          if (!img.hasAttribute('decoding')) {
+            img.decoding = 'async';
+          }
+          
+          // Отключаем наблюдение после оптимизации
+          observer.unobserve(img);
+        }
+      });
+    }, { rootMargin: '200px' });
+    
+    // Наблюдаем за всеми изображениями
+    images.forEach(img => {
+      imageObserver.observe(img);
+    });
+  }
+  
+  // Вызываем функцию оптимизации изображений
+  optimizeImages();
     const nav = document.querySelector('.nav');
     if (window.innerWidth <= 768 && nav) {
         nav.style.display = 'none';
@@ -201,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       });
-    }
+
 
     function syncPhoneButtonWidth() {
         const phoneButton = document.querySelector('.footer-phone-right');
@@ -242,16 +275,25 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Форма Telegram
+    // Форма Telegram с оптимизацией запросов и кэширования
     const telegramForm = document.getElementById('telegramForm');
     if (telegramForm) {
       // Валидация номера телефона
       const phoneInput = telegramForm.querySelector('input[name="phone"]');
       const phoneError = telegramForm.querySelector('.phone-error');
       
+      // Кэшируем результаты валидации для предотвращения повторных вычислений
+      const validationCache = new Map();
+      
       if (phoneInput && phoneError) {
-        // Функция для форматирования номера телефона
+        // Функция для форматирования номера телефона с мемоизацией
+        const formatPhoneNumberCache = new Map();
         function formatPhoneNumber(value) {
+          // Проверяем кэш перед вычислением
+          if (formatPhoneNumberCache.has(value)) {
+            return formatPhoneNumberCache.get(value);
+          }
+          
           let numbers = value.replace(/\D/g, '');
           if (numbers.startsWith('8') && numbers.length === 11) {
             numbers = '7' + numbers.substring(1);
@@ -260,8 +302,9 @@ document.addEventListener('DOMContentLoaded', () => {
             numbers = '+' + numbers;
           }
           // Форматируем номер в виде +7(999)123-45-67
+          let formatted;
           if (numbers.startsWith('+7')) {
-            let formatted = '+7';
+            formatted = '+7';
             if (numbers.length > 2) {
               formatted += '(' + numbers.substring(2, 5);
             }
@@ -274,10 +317,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (numbers.length > 10) {
               formatted += '-' + numbers.substring(10, 12);
             }
-            return formatted;
-          }
-          if (numbers.startsWith('7')) {
-            let formatted = '+7';
+          } else if (numbers.startsWith('7')) {
+            formatted = '+7';
             if (numbers.length > 1) {
               formatted += '(' + numbers.substring(1, 4);
             }
@@ -290,46 +331,74 @@ document.addEventListener('DOMContentLoaded', () => {
             if (numbers.length > 9) {
               formatted += '-' + numbers.substring(9, 11);
             }
-            return formatted;
+          } else {
+            formatted = numbers;
           }
-          return numbers;
+          
+          // Сохраняем результат в кэше
+          formatPhoneNumberCache.set(value, formatted);
+          // Ограничиваем размер кэша
+          if (formatPhoneNumberCache.size > 100) {
+            const firstKey = formatPhoneNumberCache.keys().next().value;
+            formatPhoneNumberCache.delete(firstKey);
+          }
+          
+          return formatted;
         }
         
-        // Функция для валидации номера
+        // Функция для валидации номера с кэшированием
         function validatePhone(value) {
+          // Проверяем кэш перед вычислением
+          if (validationCache.has(value)) {
+            return validationCache.get(value);
+          }
+          
           // Убираем все кроме цифр для проверки
           const numbers = value.replace(/\D/g, '');
           
           // Проверяем длину и формат
+          let isValid = false;
           if (numbers.length === 11 && (numbers.startsWith('7') || numbers.startsWith('8'))) {
-            return true;
-          }
-          if (numbers.length === 10 && numbers.startsWith('9')) {
-            return true;
+            isValid = true;
+          } else if (numbers.length === 10 && numbers.startsWith('9')) {
+            isValid = true;
           }
           
-          return false;
+          // Сохраняем результат в кэше
+          validationCache.set(value, isValid);
+          // Ограничиваем размер кэша
+          if (validationCache.size > 100) {
+            const firstKey = validationCache.keys().next().value;
+            validationCache.delete(firstKey);
+          }
+          
+          return isValid;
         }
         
-        // Обработчик ввода
+        // Оптимизированный обработчик ввода с debounce
+        let inputTimer;
         phoneInput.addEventListener('input', function(e) {
-          let value = e.target.value;
+          clearTimeout(inputTimer);
           
-          // Форматируем номер
-          const formatted = formatPhoneNumber(value);
-          e.target.value = formatted;
-          
-          // Валидируем
-          const isValid = validatePhone(formatted);
-          
-          if (isValid) {
-            phoneError.style.display = 'none';
-            phoneInput.style.borderColor = '#27ae60';
-            phoneInput.style.boxShadow = '0 0 0 2px rgba(39, 174, 96, 0.2)';
-          } else {
-            phoneInput.style.borderColor = '#e74c3c';
-            phoneInput.style.boxShadow = '0 0 0 2px rgba(231, 76, 60, 0.2)';
-          }
+          inputTimer = setTimeout(() => {
+            let value = e.target.value;
+            
+            // Форматируем номер
+            const formatted = formatPhoneNumber(value);
+            e.target.value = formatted;
+            
+            // Валидируем
+            const isValid = validatePhone(formatted);
+            
+            if (isValid) {
+              phoneError.style.display = 'none';
+              phoneInput.style.borderColor = '#27ae60';
+              phoneInput.style.boxShadow = '0 0 0 2px rgba(39, 174, 96, 0.2)';
+            } else {
+              phoneInput.style.borderColor = '#e74c3c';
+              phoneInput.style.boxShadow = '0 0 0 2px rgba(231, 76, 60, 0.2)';
+            }
+          }, 100); // Небольшая задержка для оптимизации производительности
         });
         
         // Обработчик потери фокуса
@@ -352,8 +421,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
+      // Предотвращение множественных отправок
+      let isSubmitting = false;
       telegramForm.addEventListener('submit', function(e) {
         e.preventDefault();
+        
+        // Предотвращаем повторную отправку
+        if (isSubmitting) return;
+        isSubmitting = true;
         
         // Проверяем валидность номера перед отправкой
         const phoneValue = phoneInput.value;
@@ -364,6 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
           phoneInput.style.borderColor = '#e74c3c';
           phoneInput.style.boxShadow = '0 0 0 2px rgba(231, 76, 60, 0.2)';
           phoneInput.focus();
+          isSubmitting = false;
           return;
         }
         
@@ -371,37 +447,63 @@ document.addEventListener('DOMContentLoaded', () => {
         const botToken = '8068709438:AAFcvRxBQS48WTcdWTX8yJ3yhMZDMpmqXNY';
         const chatId = '1924942515'; // Узнать через @getmyid_bot
         
-        // Формируем сообщение
+        // Кэшируем данные формы для предотвращения повторного сбора при ошибках
         const formData = new FormData(this);
-        const text = `📌 Новая заявка:\n\n👤 Имя: ${formData.get('name')}\n📞 Телефон: ${formData.get('phone')}\n🔧 Услуга: ${formData.get('service')}\n📝 Комментарий: ${formData.get('comment') || '—'}`;
+        const formDataCache = {};
+        for (const [key, value] of formData.entries()) {
+          formDataCache[key] = value;
+        }
         
-        // Отправляем в Telegram
+        // Формируем сообщение
+        const text = `📌 Новая заявка:\n\n👤 Имя: ${formDataCache.name}\n📞 Телефон: ${formDataCache.phone}\n🔧 Услуга: ${formDataCache.service}\n📝 Комментарий: ${formDataCache.comment || '—'}`;
+        
+        // Отправляем в Telegram с оптимизацией запроса
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // Таймаут 10 секунд
+        
         fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache' // Предотвращаем кэширование запроса
+          },
           body: JSON.stringify({
             chat_id: chatId,
             text: text,
             parse_mode: 'HTML'
-          })
+          }),
+          signal: controller.signal
         })
         .then(() => {
+          clearTimeout(timeoutId);
           // Показываем сообщение об успехе
           document.getElementById('telegramForm').style.display = 'none';
           document.getElementById('formSuccess').style.display = 'block';
           
-          // Очищаем форму (опционально)
+          // Очищаем форму
           this.reset();
+          
+          // Очищаем кэш валидации
+          validationCache.clear();
         })
-        .catch(() => alert('Ошибка отправки. Позвоните нам напрямую.'));
+        .catch((error) => {
+          clearTimeout(timeoutId);
+          console.error('Ошибка отправки:', error);
+          alert('Ошибка отправки. Позвоните нам напрямую.');
+        })
+        .finally(() => {
+          isSubmitting = false;
+        });
       });
     }
 
-    // Hero backdrop
+    // Hero backdrop с оптимизацией производительности
     const backdrop = document.querySelector('.hero__backdrop');
     if (backdrop) {
       const gradientDesktop = 'linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%)';
       const gradientMobile  = 'linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 100%)';
+      let lastWidth = window.innerWidth;
+      let resizeTimer;
 
       function updateBackground() {
         const isMobile = window.innerWidth <= 768;
@@ -411,22 +513,51 @@ document.addEventListener('DOMContentLoaded', () => {
         // Если фон уже такой же, ничего не делаем
         if (backdrop.style.backgroundImage.includes(bgUrl)) return;
 
+        // Используем кэшированные изображения, если они уже загружены браузером
         const img = new Image();
+        
+        // Добавляем атрибут loading="lazy" для ленивой загрузки
+        img.loading = 'lazy';
+        img.decoding = 'async'; // Добавляем асинхронное декодирование
+        img.fetchPriority = 'high'; // Высокий приоритет для фоновых изображений
         img.src = bgUrl;
-        img.onload = function() {
+        
+        // Если изображение уже в кэше, оно загрузится мгновенно
+        if (img.complete) {
           backdrop.style.backgroundImage = `${gradient}, url('${bgUrl}')`;
           backdrop.classList.add('loaded');
-        };
+        } else {
+          img.onload = function() {
+            backdrop.style.backgroundImage = `${gradient}, url('${bgUrl}')`;
+            backdrop.classList.add('loaded');
+          };
+        }
       }
 
-      updateBackground();
+      // Инициализация при загрузке с использованием IntersectionObserver для ленивой загрузки
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          updateBackground();
+          observer.disconnect();
+        }
+      }, { rootMargin: '300px', threshold: 0.1 }); // Увеличиваем отступ и добавляем порог видимости
+      
+      observer.observe(backdrop);
 
+      // Оптимизированный обработчик изменения размера окна с debounce
       window.addEventListener('resize', function() {
-        updateBackground();
+        // Проверяем, действительно ли изменилась ширина (чтобы избежать срабатывания на изменение высоты)
+        if (window.innerWidth !== lastWidth) {
+          lastWidth = window.innerWidth;
+          
+          // Используем debounce для предотвращения множественных вызовов
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(updateBackground, 150);
+        }
       });
     }
 
-    // Фотогалерея
+    // Фотогалерея с оптимизацией производительности
     const gallerySlider = document.querySelector('.gallery-track');
     const galleryDots = document.querySelectorAll('.gallery-dot');
     const prevBtn = document.querySelector('.gallery-nav--prev');
@@ -435,73 +566,136 @@ document.addEventListener('DOMContentLoaded', () => {
     if (gallerySlider && galleryDots.length > 0) {
       let currentSlide = 0;
       const totalSlides = galleryDots.length;
+      let autoSlideInterval;
+      let isVisible = false;
       
+      // Оптимизированная функция перехода к слайду с использованием requestAnimationFrame
       function goToSlide(slideIndex) {
         if (slideIndex < 0) slideIndex = totalSlides - 1;
         if (slideIndex >= totalSlides) slideIndex = 0;
         
         currentSlide = slideIndex;
-        const translateX = -currentSlide * 100;
-        gallerySlider.style.transform = `translateX(${translateX}%)`;
         
-        // Обновляем активную точку
-        galleryDots.forEach((dot, index) => {
-          dot.classList.toggle('active', index === currentSlide);
+        // Используем requestAnimationFrame для плавной анимации
+        requestAnimationFrame(() => {
+          const translateX = -currentSlide * 100;
+          gallerySlider.style.transform = `translateX(${translateX}%)`;
+          
+          // Обновляем активную точку
+          galleryDots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+          });
+          
+          // Предзагрузка следующего изображения для плавного перехода
+          const nextIndex = (currentSlide + 1) % totalSlides;
+          const nextSlide = gallerySlider.children[nextIndex];
+          if (nextSlide) {
+            const nextImg = nextSlide.querySelector('img');
+            if (nextImg && !nextImg.dataset.loaded) {
+              nextImg.dataset.loaded = 'true';
+            }
+          }
         });
       }
       
-      // Обработчики для кнопок
+      // Оптимизированные обработчики для кнопок с предотвращением множественных кликов
       if (prevBtn) {
         prevBtn.addEventListener('click', () => {
+          clearInterval(autoSlideInterval);
           goToSlide(currentSlide - 1);
+          resetAutoSlide();
         });
       }
       
       if (nextBtn) {
         nextBtn.addEventListener('click', () => {
+          clearInterval(autoSlideInterval);
           goToSlide(currentSlide + 1);
+          resetAutoSlide();
         });
       }
       
-      // Обработчики для точек
+      // Обработчики для точек с предотвращением множественных кликов
       galleryDots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
-          goToSlide(index);
+          if (currentSlide !== index) {
+            clearInterval(autoSlideInterval);
+            goToSlide(index);
+            resetAutoSlide();
+          }
         });
       });
       
-      // Автопрокрутка
-      let autoSlideInterval = setInterval(() => {
-        goToSlide(currentSlide + 1);
-      }, 5000);
-
-      // Останавливаем автопрокрутку при взаимодействии
+      // Функция для сброса автопрокрутки
+      function resetAutoSlide() {
+        if (!isVisible) return;
+        
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = setInterval(() => {
+          goToSlide(currentSlide + 1);
+        }, 5000);
+      }
+      
+      // Используем Intersection Observer для определения видимости галереи
+      // и запуска автопрокрутки только когда галерея видна
       const galleryContainer = document.querySelector('.gallery-container');
       if (galleryContainer) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            isVisible = entry.isIntersecting;
+            
+            if (isVisible) {
+              resetAutoSlide();
+              // Предзагрузка всех изображений при появлении в области видимости
+              Array.from(gallerySlider.children).forEach((slide, index) => {
+                const img = slide.querySelector('img');
+                if (img && !img.dataset.loaded) {
+                  img.dataset.loaded = 'true';
+                }
+              });
+            } else {
+              clearInterval(autoSlideInterval);
+            }
+          });
+        }, { threshold: 0.25 });
+        
+        observer.observe(galleryContainer);
+        
+        // Останавливаем автопрокрутку при взаимодействии пользователя
         galleryContainer.addEventListener('mouseenter', () => {
           clearInterval(autoSlideInterval);
         });
+        
         galleryContainer.addEventListener('mouseleave', () => {
-          autoSlideInterval = setInterval(() => {
-            goToSlide(currentSlide + 1);
-          }, 5000);
+          if (isVisible) {
+            resetAutoSlide();
+          }
         });
       }
 
-      // Очистка интервала при уходе со страницы
-      window.addEventListener('beforeunload', () => {
-        clearInterval(autoSlideInterval);
-      });
-
-      // Свайп на мобильных устройствах
+      // Оптимизированный свайп на мобильных устройствах с пассивными слушателями
       let startX = 0;
       let endX = 0;
+      let isSwiping = false;
+      
       gallerySlider.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
-      });
+        isSwiping = true;
+        clearInterval(autoSlideInterval);
+      }, { passive: true });
+      
+      gallerySlider.addEventListener('touchmove', (e) => {
+        if (!isSwiping) return;
+        // Предотвращаем прокрутку страницы при свайпе галереи
+        e.preventDefault();
+      }, { passive: false });
+      
       gallerySlider.addEventListener('touchend', (e) => {
+        if (!isSwiping) return;
+        
         endX = e.changedTouches[0].clientX;
         const diff = startX - endX;
+        
         if (Math.abs(diff) > 50) { // Минимальное расстояние для свайпа
           if (diff > 0) {
             goToSlide(currentSlide + 1); // Свайп влево
@@ -509,9 +703,13 @@ document.addEventListener('DOMContentLoaded', () => {
             goToSlide(currentSlide - 1); // Свайп вправо
           }
         }
-      });
+        
+        isSwiping = false;
+        resetAutoSlide();
+      }, { passive: true });
 
-      // Инициализация
+      // Инициализация первого слайда
       goToSlide(0);
     }
+  }
 });

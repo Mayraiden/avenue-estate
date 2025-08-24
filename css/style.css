@@ -1,8 +1,11 @@
 /* Все секционные CSS подключайте через <link> в <head> index.html для максимальной скорости */
 
-/* Базовые стили */
+/* Базовые стили с оптимизацией производительности */
 :root {
     scroll-behavior: smooth;
+    /* Оптимизация для предотвращения CLS (Cumulative Layout Shift) */
+    height: 100%;
+    overflow-y: scroll;
 }
 
 * {
@@ -16,6 +19,9 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    /* Улучшение доступности */
+    cursor: pointer;
+    touch-action: manipulation;
 }
 
 html {
@@ -31,12 +37,19 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Оптимизация текста */
+    text-rendering: optimizeSpeed;
 }
 
 img {
     max-width: 100%;
     height: auto;
     display: block;
+    /* Предотвращение CLS при загрузке изображений */
+    content-visibility: auto;
+    contain: layout paint;
+    /* Оптимизация для GPU-ускорения */
+    transform: translateZ(0);
 }
 
 /* Контейнер */
