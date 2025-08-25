@@ -257,22 +257,39 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Аккордеон
-    document.querySelectorAll('.accordion-header').forEach(header => {
-      header.addEventListener('click', () => {
-        const accordionItem = header.parentElement;
-        const isActive = accordionItem.classList.contains('active');
+    // Аккордеон с улучшенной доступностью
+    document.querySelectorAll('.accordion-item').forEach(item => {
+      const header = item.querySelector('.accordion-header');
+      const content = item.querySelector('.accordion-preview');
+      
+      // Обработчик клика
+      const handleClick = () => {
+        const isActive = item.classList.contains('active');
         
         // Закрываем все остальные элементы
-        document.querySelectorAll('.accordion-item').forEach(item => {
-          if (item !== accordionItem) {
-            item.classList.remove('active');
+        document.querySelectorAll('.accordion-item').forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+            otherItem.setAttribute('aria-expanded', 'false');
           }
         });
         
         // Переключаем текущий элемент
-        accordionItem.classList.toggle('active');
-      });
+        item.classList.toggle('active');
+        item.setAttribute('aria-expanded', !isActive);
+      };
+      
+      // Обработчик клавиатуры
+      const handleKeydown = (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleClick();
+        }
+      };
+      
+      // Добавляем обработчики
+      header.addEventListener('click', handleClick);
+      item.addEventListener('keydown', handleKeydown);
     });
 
     // Форма Telegram с оптимизацией запросов и кэширования

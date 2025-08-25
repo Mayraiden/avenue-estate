@@ -60,6 +60,17 @@ img {
     padding: var(--spacing-2xl) var(--spacing-xl);
 }
 
+/* Убираем лишние отступы между секциями */
+main > * + * {
+    margin-top: 0;
+}
+
+/* Убираем отступы у main */
+main {
+    margin: 0;
+    padding: 0;
+}
+
 .section-container > p {
     font-size: var(--font-size-lg);
     line-height: 1.6;

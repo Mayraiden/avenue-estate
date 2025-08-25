@@ -5,7 +5,7 @@
     z-index: 2;
     content-visibility: auto;
     contain: layout style paint;
-    margin-top: 100dvh;
+    margin-top: 0;
 }
 
 .white-section h2 {

@@ -40,10 +40,20 @@
   <!-- Фавиконы для различных устройств -->
   <link rel="icon" type="image/png" href="img/Favicon Generator/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="img/Favicon Generator/favicon.svg" />
-  <link rel="shortcut icon" href="/img/Favicon Generator/favicon.ico" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="shortcut icon" href="img/Favicon Generator/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/Favicon Generator/web-app-manifest-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/img/Favicon Generator/web-app-manifest-512x512.png">
+  <link rel="mask-icon" href="/img/Favicon Generator/favicon.svg" color="#3F2B23">
   <link rel="apple-touch-icon" sizes="180x180" href="/img/Favicon Generator/apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-title" content="Avenue Estate Realty" />
   <link rel="manifest" href="/img/Favicon Generator/site.webmanifest" />
+  <!-- Для Яндекс.Браузера (плитка на новой вкладке) -->
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/Favicon Generator/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/img/Favicon Generator/android-chrome-512x512.png">
+
+  <meta name="yandex-tableau-widget" content="logo=/img/Favicon Generator/android-chrome-192x192.png">
+<meta name="theme-color" content="#3F2B23">
   
   <!-- Preload критических ресурсов -->
   <link rel="preload" href="img/hero-bg.webp" as="image" type="image/webp" fetchpriority="high">
@@ -142,8 +152,6 @@
        data-desktop-bg="/img/hero-bg.webp"
        data-mobile-bg="/img/hero-bg-mobile.webp"></div>
 </div>
-
-
     <section class="white-section" id="about">
       <div class="section-container">
         <h2>О нашей работе</h2>
@@ -193,65 +201,65 @@
     <h2 class="section-title">УСЛУГИ</h2>
     <p class="section-subtitle">Предоставляем полный комплекс услуг с гарантией безопасности сделки</p>
 
-    <div class="accordion">
+    <div class="accordion" role="region" aria-label="Список услуг">
 
-      <div class="accordion-item">
+      <div class="accordion-item" role="button" tabindex="0" aria-expanded="false" aria-controls="content-1">
         <div class="accordion-header">
           <div class="accordion-title">
             <h3>ПРОДАЖА НЕДВИЖИМОСТИ</h3>
-            <span class="accordion-preview">Оценка стоимости, предпродажная подготовка объекта, регулярная отчетность, полное юридическое сопровождение до получения вами денежных средств и передачи объекта покупателю.</span>
+            <span class="accordion-preview" id="content-1">Оценка стоимости, предпродажная подготовка объекта, регулярная отчетность, полное юридическое сопровождение до получения вами денежных средств и передачи объекта покупателю.</span>
           </div>
-          <span class="accordion-icon">+</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
         </div>
       </div>
 
-      <div class="accordion-item">
+      <div class="accordion-item" role="button" tabindex="0" aria-expanded="false" aria-controls="content-2">
         <div class="accordion-header">
           <div class="accordion-title">
             <h3>ПОКУПКА НЕДВИЖИМОСТИ</h3>
-            <span class="accordion-preview">Аналитика рынка, участие в закрытых продажах, согласование индивидуальных условий, юридическая проверка объекта, сопровождение до получения ключей, возможность передачи объекта нам в управление.</span>
+            <span class="accordion-preview" id="content-2">Аналитика рынка, участие в закрытых продажах, согласование индивидуальных условий, юридическая проверка объекта, сопровождение до получения ключей, возможность передачи объекта нам в управление.</span>
           </div>
-          <span class="accordion-icon">+</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
         </div>
       </div>
 
-      <div class="accordion-item">
+      <div class="accordion-item" role="button" tabindex="0" aria-expanded="false" aria-controls="content-3">
         <div class="accordion-header">
           <div class="accordion-title">
             <h3>ЮРИДИЧЕСКОЕ СОПРОВОЖДЕНИЕ</h3>
-            <span class="accordion-preview">Проверка рисков, сбор и восстановление документов, подготовка документации, контроль расчетов и передача объекта.</span>
+            <span class="accordion-preview" id="content-3">Проверка рисков, сбор и восстановление документов, подготовка документации, контроль расчетов и передача объекта.</span>
           </div>
-          <span class="accordion-icon">+</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
         </div>
       </div>
 
-      <div class="accordion-item">
+      <div class="accordion-item" role="button" tabindex="0" aria-expanded="false" aria-controls="content-4">
         <div class="accordion-header">
           <div class="accordion-title">
             <h3>ОДОБРЕНИЕ ИПОТЕКИ</h3>
-            <span class="accordion-preview">Анализ кредитного потенциала, снижение риска отказа, подбор выгодных условий и надежной страховой компании.</span>
+            <span class="accordion-preview" id="content-4">Анализ кредитного потенциала, снижение риска отказа, подбор выгодных условий и надежной страховой компании.</span>
           </div>
-          <span class="accordion-icon">+</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
         </div>
       </div>
 
-      <div class="accordion-item">
+      <div class="accordion-item" role="button" tabindex="0" aria-expanded="false" aria-controls="content-5">
         <div class="accordion-header">
           <div class="accordion-title">
             <h3>ОЦЕНКА НЕДВИЖИМОСТИ</h3>
-            <span class="accordion-preview">Сбор актуальной статистики по рынку, прогноз изменения стоимости, рекомендация стартовой цены для максимальной выгоды.</span>
+            <span class="accordion-preview" id="content-5">Сбор актуальной статистики по рынку, прогноз изменения стоимости, рекомендация стартовой цены для максимальной выгоды.</span>
           </div>
-          <span class="accordion-icon">+</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
         </div>
       </div>
 
-      <div class="accordion-item">
+      <div class="accordion-item" role="button" tabindex="0" aria-expanded="false" aria-controls="content-6">
         <div class="accordion-header">
           <div class="accordion-title">
             <h3>КОНСУЛЬТАЦИЯ</h3>
-            <span class="accordion-preview">Разбор вашей ситуации, подбор возможных решений и рекомендации по оптимальному пути.</span>
+            <span class="accordion-preview" id="content-6">Разбор вашей ситуации, подбор возможных решений и рекомендации по оптимальному пути.</span>
           </div>
-          <span class="accordion-icon">+</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
         </div>
       </div>
       
@@ -359,7 +367,7 @@
 
       <p class="form-notice">
         Нажимая кнопку, вы соглашаетесь с
-        <a href="/privacy" target="_blank">политикой конфиденциальности</a>
+        <a href="Пользовательское соглашение.pdf" target="_blank" rel="noopener noreferrer">пользовательским соглашением</a>
       </p>
     </form>
 
@@ -389,12 +397,18 @@
           </div>
         </div>
         <button type="button" class="phone-button footer-phone-right" id="phoneButton">
-          <span class="phone-text">+7(969)060-60-20</span>
+          <span class="phone-text">+7 (969) 060-60-20</span>
           <span class="phone-copy">Скопировано!</span>
         </button>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2025 Avenue Estate Realty. Все права защищены.</p>
+        <div class="footer-info">
+          <p>ИП Олейникова Ирина Юрьевна</p>
+          <p>ИНН 280600849970 | ОГРНИП 325280000018710 </p>
+          <p>Адрес: Амурская область г. Райчихинск, ул. Победы, д. 52, кв./оф. 62</p>
+          <p>Тел.: +7 (969) 060-60-20 | Email: avenueMOSestate@ya.ru</p>
+        </div>
+        <p>© 2025 ИП Олейникова И.Ю. Все права защищены.</p>
       </div>
     </div>
   </footer>
