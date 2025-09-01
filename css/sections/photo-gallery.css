@@ -19,7 +19,7 @@
 
 .photo-gallery .section-subtitle {
   text-align: center;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   color: var(--text-color-light);
   max-width: 720px;
   margin: 0 auto 48px auto; /* авто-центрирование + отступ снизу */
@@ -138,9 +138,36 @@
 }
 
 @media (max-width: 480px){
-  .gallery-slide img{height:250px;}
-  .gallery-nav{width:40px;height:40px;}
+  .gallery-slide img{
+    height: 400px;
+    width: 100%;
+    max-width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .gallery-slide {
+    width: 100%;
+    overflow: hidden;
+  }
+  .gallery-container {
+    padding: 0 20px;
+    max-width: 90%;
+    margin: 0 auto;
+  }
+  .gallery-nav{
+    width: 40px;
+    height: 40px;
+  }
+  .gallery-nav:first-child {
+    margin-right: 20px;
+  }
+  .gallery-nav:last-child {
+    margin-left: 20px;
+  }
   .gallery-nav svg{width:18px;height:18px;}
+  .photo-gallery .section-title {
+    font-size: var(--font-size-2xl);
+  }
 }
 
 /* ===== Анимации перелистывания (как были, но сглажены) ===== */

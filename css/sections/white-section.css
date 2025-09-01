@@ -17,7 +17,7 @@
 }
 
 .white-section > .section-container > p {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-xl);
     line-height: 1.6;
     color: var(--text-color);
     text-align: center;
@@ -69,7 +69,7 @@
     }
 
     .white-section > .section-container > p {
-        font-size: var(--font-size-md);
+        font-size: var(--font-size-xl);
         padding: 0 var(--spacing-lg);
         line-height: 1.5;
     }
@@ -100,7 +100,7 @@
     }
 
     .white-section > .section-container > p {
-        font-size: var(--font-size-sm);
+        font-size: var(--font-size-md);
         margin-bottom: var(--spacing-lg);
         padding: 0 var(--spacing-sm);
         line-height: 1.4;
@@ -128,13 +128,13 @@
     }
 
     .white-section h2 {
-        font-size: var(--font-size-lg);
+        font-size: var(--font-size-2xl);
         margin-bottom: var(--spacing-md);
         padding: 0 var(--spacing-sm);
     }
 
     .white-section > .section-container > p {
-        font-size: var(--font-size-sm);
+        font-size: var(--font-size-lg);
         margin-bottom: var(--spacing-lg);
         padding: 0 var(--spacing-sm);
         line-height: 1.4;

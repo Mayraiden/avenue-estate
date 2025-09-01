@@ -19,7 +19,7 @@
 }
 
 .services-section > .section-container > p {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   line-height: 1.6;
   color: var(--bg-color-light);
   text-align: center;

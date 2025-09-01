@@ -260,10 +260,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Аккордеон с улучшенной доступностью
     document.querySelectorAll('.accordion-item').forEach(item => {
       const header = item.querySelector('.accordion-header');
-      const content = item.querySelector('.accordion-preview');
+      if (!header) return;
       
-      // Обработчик клика
-      const handleClick = () => {
+      const handleClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
         const isActive = item.classList.contains('active');
         
         // Закрываем все остальные элементы
@@ -277,18 +279,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // Переключаем текущий элемент
         item.classList.toggle('active');
         item.setAttribute('aria-expanded', !isActive);
+        
+
       };
       
-      // Обработчик клавиатуры
       const handleKeydown = (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          handleClick();
+          handleClick(e);
         }
       };
       
       // Добавляем обработчики
       header.addEventListener('click', handleClick);
+      item.addEventListener('click', handleClick);
       item.addEventListener('keydown', handleKeydown);
     });
 
@@ -728,37 +732,46 @@ document.addEventListener('DOMContentLoaded', () => {
       // Инициализация первого слайда
       goToSlide(0);
     }
+
+    // Плавный скролл к форме по кнопке hero и управление её видимостью
+    const heroContent = document.querySelector('.hero__content');
+    const heroSection = document.querySelector('.hero');
+    
+    document.querySelectorAll('.hero__cta-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const formSection = document.querySelector('.tg-form-section');
+        if (formSection) {
+          formSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Управление видимостью кнопки hero при скролле
+    function handleHeroButtonVisibility() {
+      if (!heroContent || !heroSection) return;
+      
+      const heroHeight = heroSection.offsetHeight;
+      const scrollY = window.scrollY;
+      
+      if (scrollY < heroHeight - 100) {
+        // Показываем кнопку, когда hero виден
+        heroContent.classList.remove('hidden');
+        heroContent.classList.add('visible');
+      } else {
+        // Скрываем кнопку, когда проскроллили мимо hero
+        heroContent.classList.remove('visible');
+        heroContent.classList.add('hidden');
+      }
+    }
+
+    // Инициализация видимости кнопки
+    handleHeroButtonVisibility();
+    
+    // Обработчик скролла
+    window.addEventListener('scroll', handleHeroButtonVisibility);
   }
 });
 
 
-// js/script.js
 
-document.addEventListener("DOMContentLoaded", () => {
-  const backdrop = document.querySelector(".hero__backdrop");
-  if (!backdrop) return;
-
-  const mobileBg = backdrop.dataset.mobileBg;
-  const desktopBg = backdrop.dataset.desktopBg;
-
-  function setBackground() {
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const newBg = isMobile ? mobileBg : desktopBg;
-
-    // если фон уже установлен — не перезаписываем
-    if (backdrop.style.backgroundImage.includes(newBg)) return;
-
-    const img = new Image();
-    img.src = newBg;
-    img.onload = () => {
-      backdrop.style.backgroundImage = `url(${newBg})`;
-      backdrop.classList.add("loaded");
-    };
-  }
-
-  // первоначальная установка
-  setBackground();
-
-  // реагируем на ресайз
-  window.addEventListener("resize", setBackground);
-});
