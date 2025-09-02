@@ -41,6 +41,13 @@ body {
     text-rendering: optimizeSpeed;
 }
 
+main {
+    /* Добавляем отступ сверху, равный высоте hero-секции */
+    padding-top: 100vh;
+    position: relative;
+    z-index: 2;
+}
+
 img {
     max-width: 100%;
     height: auto;
@@ -48,8 +55,6 @@ img {
     /* Предотвращение CLS при загрузке изображений */
     content-visibility: auto;
     contain: layout paint;
-    /* Оптимизация для GPU-ускорения */
-    transform: translateZ(0);
 }
 
 /* Контейнер */
@@ -58,17 +63,6 @@ img {
     max-width: var(--container-max-width);
     margin: 0 auto;
     padding: var(--spacing-2xl) var(--spacing-xl);
-}
-
-/* Убираем лишние отступы между секциями */
-main > * + * {
-    margin-top: 0;
-}
-
-/* Убираем отступы у main */
-main {
-    margin: 0;
-    padding: 0;
 }
 
 .section-container > p {

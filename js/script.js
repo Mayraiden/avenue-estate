@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       });
-
+    
 
     function syncPhoneButtonWidth() {
         const phoneButton = document.querySelector('.footer-phone-right');
@@ -257,44 +257,76 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Аккордеон с улучшенной доступностью
-    document.querySelectorAll('.accordion-item').forEach(item => {
-      const header = item.querySelector('.accordion-header');
-      if (!header) return;
-      
-      const handleClick = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+    // Аккордеон для услуг с оптимизацией производительности
+    const accordionItems = document.querySelectorAll('.accordion-item');
+    const accordionContainer = document.querySelector('.accordion');
+    
+    if (accordionContainer && accordionItems.length > 0) {
+      // Используем делегирование событий для лучшей производительности
+      accordionContainer.addEventListener('click', (e) => {
+        // Находим ближайший родительский элемент .accordion-item или .accordion-header
+        const header = e.target.closest('.accordion-header');
+        const item = e.target.closest('.accordion-item');
         
-        const isActive = item.classList.contains('active');
-        
-        // Закрываем все остальные элементы
-        document.querySelectorAll('.accordion-item').forEach(otherItem => {
-          if (otherItem !== item) {
-            otherItem.classList.remove('active');
-            otherItem.setAttribute('aria-expanded', 'false');
-          }
-        });
-        
-        // Переключаем текущий элемент
-        item.classList.toggle('active');
-        item.setAttribute('aria-expanded', !isActive);
-        
-
-      };
-      
-      const handleKeydown = (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handleClick(e);
+        if (header && item) {
+          // Используем requestAnimationFrame для оптимизации анимации
+          requestAnimationFrame(() => {
+            // Закрываем все остальные элементы
+            accordionItems.forEach(otherItem => {
+              if (otherItem !== item && otherItem.classList.contains('active')) {
+                otherItem.classList.remove('active');
+              }
+            });
+            
+            // Переключаем текущий элемент
+            item.classList.toggle('active');
+            
+            // Автоматический скролл отключен по запросу пользователя
+            // if (item.classList.contains('active') && window.innerWidth <= 768) {
+            //   setTimeout(() => {
+            //     const headerRect = header.getBoundingClientRect();
+            //     const offset = 20; // Отступ сверху
+            //     
+            //     window.scrollTo({
+            //       top: window.scrollY + headerRect.top - offset,
+            //       behavior: 'smooth'
+            //     });
+            //   }, 300);
+            // }
+          });
         }
-      };
+      });
       
-      // Добавляем обработчики
-      header.addEventListener('click', handleClick);
-      item.addEventListener('click', handleClick);
-      item.addEventListener('keydown', handleKeydown);
-    });
+      // Добавляем поддержку клавиатуры для доступности
+      accordionItems.forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        if (header) {
+          header.setAttribute('tabindex', '0');
+          header.setAttribute('role', 'button');
+          header.setAttribute('aria-expanded', 'false');
+          
+          header.addEventListener('keydown', (e) => {
+            // Активация при нажатии Enter или Space
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              header.click();
+            }
+          });
+          
+          // Обновляем атрибуты ARIA при изменении состояния
+          const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+              if (mutation.attributeName === 'class') {
+                const isActive = item.classList.contains('active');
+                header.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+              }
+            });
+          });
+          
+          observer.observe(item, { attributes: true });
+        }
+      });
+    }
 
     // Форма Telegram с оптимизацией запросов и кэширования
     const telegramForm = document.getElementById('telegramForm');
@@ -521,39 +553,68 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hero backdrop с оптимизацией производительности
     const backdrop = document.querySelector('.hero__backdrop');
     if (backdrop) {
-      const gradientDesktop = 'linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%)';
-      const gradientMobile  = 'linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 100%)';
       let lastWidth = window.innerWidth;
       let resizeTimer;
+      
+      // Предзагрузка изображений для мгновенного отображения
+      function preloadHeroImages() {
+        const desktopBgUrl = backdrop.getAttribute('data-desktop-bg');
+        const mobileBgUrl = backdrop.getAttribute('data-mobile-bg');
+        
+        // Создаем ссылки для предзагрузки
+        const linkDesktop = document.createElement('link');
+        linkDesktop.rel = 'preload';
+        linkDesktop.as = 'image';
+        linkDesktop.href = desktopBgUrl;
+        linkDesktop.type = 'image/webp';
+        linkDesktop.fetchPriority = 'high';
+        
+        const linkMobile = document.createElement('link');
+        linkMobile.rel = 'preload';
+        linkMobile.as = 'image';
+        linkMobile.href = mobileBgUrl;
+        linkMobile.type = 'image/webp';
+        linkMobile.fetchPriority = 'high';
+        
+        // Добавляем ссылки в head
+        document.head.appendChild(linkDesktop);
+        document.head.appendChild(linkMobile);
+      }
+      
+      // Вызываем предзагрузку сразу
+      preloadHeroImages();
 
       function updateBackground() {
         const isMobile = window.innerWidth <= 768;
         const bgUrl = isMobile ? backdrop.getAttribute('data-mobile-bg') : backdrop.getAttribute('data-desktop-bg');
-        const gradient = isMobile ? gradientMobile : gradientDesktop;
 
         // Если фон уже такой же, ничего не делаем
         if (backdrop.style.backgroundImage.includes(bgUrl)) return;
 
         // Используем кэшированные изображения, если они уже загружены браузером
         const img = new Image();
-        img.loading = 'lazy';
-        img.decoding = 'async';
-        img.fetchPriority = 'high';
+        
+        // Оптимизация загрузки
+        img.decoding = 'async'; // Асинхронное декодирование
+        img.fetchPriority = 'high'; // Высокий приоритет
+        img.importance = 'high'; // Высокая важность для браузера
         img.src = bgUrl;
-
-        // Функция для применения яркости
-        function applyBrightness() {
-          backdrop.style.backgroundImage = `${gradient}, url('${bgUrl}')`;
-          // Сбросить возможные другие фильтры и гарантировать яркость
-          backdrop.style.setProperty('filter', 'brightness(1.3)', 'important');
-          backdrop.classList.add('loaded');
-        }
-
-        if (img.complete) {
-          applyBrightness();
-        } else {
-          img.onload = applyBrightness;
-        }
+        
+        // Используем requestAnimationFrame для оптимизации производительности
+        requestAnimationFrame(() => {
+          // Если изображение уже в кэше, оно загрузится мгновенно
+          if (img.complete) {
+            backdrop.style.backgroundImage = `url('${bgUrl}')`;
+            backdrop.classList.add('loaded');
+          } else {
+            img.onload = function() {
+              requestAnimationFrame(() => {
+                backdrop.style.backgroundImage = `url('${bgUrl}')`;
+                backdrop.classList.add('loaded');
+              });
+            };
+          }
+        });
       }
 
       // Инициализация при загрузке с использованием IntersectionObserver для ленивой загрузки
@@ -577,6 +638,11 @@ document.addEventListener('DOMContentLoaded', () => {
           resizeTimer = setTimeout(updateBackground, 150);
         }
       });
+      
+      // Добавляем обработчик для быстрой загрузки при первом взаимодействии пользователя
+      document.addEventListener('DOMContentLoaded', function() {
+        updateBackground();
+      }, { once: true });
     }
 
     // Фотогалерея с оптимизацией производительности
@@ -733,46 +799,4 @@ document.addEventListener('DOMContentLoaded', () => {
       // Инициализация первого слайда
       goToSlide(0);
     }
-
-    // Плавный скролл к форме по кнопке hero и управление её видимостью
-    const heroContent = document.querySelector('.hero__content');
-    const heroSection = document.querySelector('.hero');
-    
-    document.querySelectorAll('.hero__cta-btn').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        const formSection = document.querySelector('.tg-form-section');
-        if (formSection) {
-          formSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    });
-
-    // Управление видимостью кнопки hero при скролле
-    function handleHeroButtonVisibility() {
-      if (!heroContent || !heroSection) return;
-      
-      const heroHeight = heroSection.offsetHeight;
-      const scrollY = window.scrollY;
-      
-      if (scrollY < heroHeight - 100) {
-        // Показываем кнопку, когда hero виден
-        heroContent.classList.remove('hidden');
-        heroContent.classList.add('visible');
-      } else {
-        // Скрываем кнопку, когда проскроллили мимо hero
-        heroContent.classList.remove('visible');
-        heroContent.classList.add('hidden');
-      }
-    }
-
-    // Инициализация видимости кнопки
-    handleHeroButtonVisibility();
-    
-    // Обработчик скролла
-    window.addEventListener('scroll', handleHeroButtonVisibility);
-  }
-});
-
-
-
+  }})
