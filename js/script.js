@@ -536,22 +536,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Используем кэшированные изображения, если они уже загружены браузером
         const img = new Image();
-        
-        // Добавляем атрибут loading="lazy" для ленивой загрузки
         img.loading = 'lazy';
-        img.decoding = 'async'; // Добавляем асинхронное декодирование
-        img.fetchPriority = 'high'; // Высокий приоритет для фоновых изображений
+        img.decoding = 'async';
+        img.fetchPriority = 'high';
         img.src = bgUrl;
-        
-        // Если изображение уже в кэше, оно загрузится мгновенно
-        if (img.complete) {
+
+        // Функция для применения яркости
+        function applyBrightness() {
           backdrop.style.backgroundImage = `${gradient}, url('${bgUrl}')`;
+          // Сбросить возможные другие фильтры и гарантировать яркость
+          backdrop.style.setProperty('filter', 'brightness(1.3)', 'important');
           backdrop.classList.add('loaded');
+        }
+
+        if (img.complete) {
+          applyBrightness();
         } else {
-          img.onload = function() {
-            backdrop.style.backgroundImage = `${gradient}, url('${bgUrl}')`;
-            backdrop.classList.add('loaded');
-          };
+          img.onload = applyBrightness;
         }
       }
 
