@@ -163,3 +163,59 @@
     font-size: var(--font-size-3xl);
   }
 }
+
+/* Стили для ссылок на политики */
+.form-notice {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  margin-top: 15px;
+  line-height: 1.4;
+}
+
+.policy-link {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid transparent;
+  padding: 2px 0;
+  display: inline-block;
+}
+
+.policy-link:hover {
+  color: var(--accent-color-dark);
+  border-bottom-color: var(--accent-color);
+  transform: translateY(-1px);
+}
+
+.policy-link:active {
+  transform: translateY(0);
+}
+
+/* Адаптивность для ссылок на политики */
+@media (max-width: 768px) {
+  .form-notice {
+    font-size: 13px;
+    padding: 0 10px;
+  }
+  
+  .policy-link {
+    font-size: 13px;
+    word-break: break-word;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-notice {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  
+  .policy-link {
+    font-size: 12px;
+    display: block;
+    margin: 2px 0;
+    text-align: center;
+  }
+}

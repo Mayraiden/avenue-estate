@@ -152,5 +152,36 @@
   .hero__backdrop {
     background-attachment: scroll; /* Предотвращает проблемы с fixed на iOS */
     -webkit-overflow-scrolling: touch; /* Улучшает плавность прокрутки */
+    /* Исправления для эффекта наплыва на iOS */
+    will-change: opacity, transform;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  .hero {
+    /* Исправления для статического эффекта на iOS */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  .hero-button {
+    /* Исправления для iOS Safari */
+    appearance: none; /* Стандартное свойство для совместимости */
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Принудительная видимость на iOS */
+    display: inline-block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    /* Исправление позиционирования на iOS */
+    position: fixed !important;
+    z-index: 9999 !important;
   }
 }
