@@ -123,7 +123,7 @@
     padding-top: 15vh;
   }
   .hero-button {
-    bottom: calc(clamp(24px, 8vh, 120px) + 180px);
+    bottom: calc(clamp(24px, 8vh, 120px) + 230px);
     padding: clamp(16px, 3.5vw, 24px) clamp(32px, 8vw, 68px);
     font-size: clamp(17px, 1.5vw + 12px, 21px);
     min-height: 52px;
@@ -139,10 +139,50 @@
     padding-top: 12vh;
   }
   .hero-button {
-    bottom: calc(clamp(24px, 8vh, 120px) + 200px);
+    bottom: calc(clamp(24px, 8vh, 120px) + 250px);
     padding: clamp(18px, 4vw, 26px) clamp(36px, 9vw, 72px);
     font-size: clamp(18px, 2vw + 12px, 22px);
     min-height: 54px;
+  }
+}
+
+/* Экстремально маленькие экраны (до 360px) - iPhone 13 mini и меньше */
+@media (max-width: 380px) {
+  .hero__backdrop {
+    background-position: center 50%;
+  }
+  .hero {
+    padding-top: 10vh;
+  }
+  .hero-button {
+    bottom: calc(clamp(20px, 6vh, 100px) + 130px);
+    padding: clamp(16px, 3.5vw, 24px) clamp(32px, 8vw, 68px);
+    font-size: clamp(16px, 1.8vw + 10px, 20px);
+    min-height: 50px;
+    max-width: 95vw;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.1;
+  }
+}
+
+/* Очень маленькие экраны (до 320px) - старые iPhone */
+@media (max-width: 320px) {
+  .hero__backdrop {
+    background-position: center 55%;
+  }
+  .hero {
+    padding-top: 8vh;
+  }
+  .hero-button {
+    bottom: calc(clamp(16px, 5vh, 80px) + 110px);
+    padding: clamp(14px, 3vw, 22px) clamp(28px, 7vw, 60px);
+    font-size: clamp(14px, 1.6vw + 8px, 18px);
+    min-height: 46px;
+    max-width: 98vw;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.1;
   }
 }
 
@@ -183,5 +223,33 @@
     /* Исправление позиционирования на iOS */
     position: fixed !important;
     z-index: 9999 !important;
+  }
+  
+  /* Дополнительные исправления для Safari на маленьких экранах */
+  @media (max-width: 360px) {
+    .hero-button {
+      /* Safari на маленьких экранах */
+      -webkit-transform: translateX(-50%) translateZ(0);
+      transform: translateX(-50%) translateZ(0);
+      -webkit-perspective: 1000px;
+      perspective: 1000px;
+      /* Принудительное обновление слоя */
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      /* Исправление рендеринга в Safari */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  }
+  
+  @media (max-width: 320px) {
+    .hero-button {
+      /* Safari на очень маленьких экранах */
+      -webkit-transform: translateX(-50%) translateZ(0) scale(0.95);
+      transform: translateX(-50%) translateZ(0) scale(0.95);
+      /* Дополнительная оптимизация для Safari */
+      -webkit-filter: none;
+      filter: none;
+    }
   }
 }

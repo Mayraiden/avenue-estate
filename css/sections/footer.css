@@ -416,6 +416,157 @@
   }
 }
 
+/* Экстремально маленькие экраны (до 360px) - iPhone 13 mini и меньше */
+@media (max-width: 360px) {
+  .footer {
+    padding: 30px 0;
+  }
+  
+  .footer-content {
+    padding: 0 10px;
+  }
+  
+  .company-info {
+    margin-bottom: 12px;
+  }
+  
+  .company-name {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  
+  .company-details {
+    font-size: 11px;
+    margin-bottom: 3px;
+    line-height: 1.2;
+    padding: 0 5px;
+  }
+  
+  .company-address,
+  .company-contacts {
+    font-size: 11px;
+  }
+  
+  .copyright {
+    font-size: 9px;
+    margin-top: 8px;
+    padding: 0 5px;
+  }
+  
+  .footer-phone {
+    margin-bottom: 20px;
+  }
+  
+  .phone-button {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+
+/* Очень маленькие экраны (до 320px) - старые iPhone */
+@media (max-width: 320px) {
+  .footer {
+    padding: 25px 0;
+  }
+  
+  .footer-content {
+    padding: 0 8px;
+  }
+  
+  .company-info {
+    margin-bottom: 10px;
+  }
+  
+  .company-name {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  
+  .company-details {
+    font-size: 10px;
+    margin-bottom: 2px;
+    line-height: 1.1;
+    padding: 0 3px;
+  }
+  
+  .company-address,
+  .company-contacts {
+    font-size: 10px;
+  }
+  
+  .copyright {
+    font-size: 8px;
+    margin-top: 6px;
+    padding: 0 3px;
+  }
+  
+  .footer-phone {
+    margin-bottom: 15px;
+  }
+  
+  .phone-button {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+}
+
+/* Специальные правила для Safari на маленьких экранах */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 360px) {
+    .company-details {
+      /* Safari оптимизация для маленьких экранов */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+    
+    .number-text,
+    .phone-display,
+    .email-display {
+      /* Дополнительная защита от Safari */
+      -webkit-text-size-adjust: none;
+      text-size-adjust: none;
+      -webkit-font-feature-settings: normal;
+      font-feature-settings: normal;
+    }
+    
+    .phone-button {
+      /* Safari оптимизация кнопки */
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+  }
+  
+  @media (max-width: 320px) {
+    .company-info {
+      /* Safari на очень маленьких экранах */
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+    
+    .company-details {
+      /* Дополнительная оптимизация текста в Safari */
+      -webkit-text-rendering: optimizeSpeed;
+      text-rendering: optimizeSpeed;
+      -webkit-font-smoothing: subpixel-antialiased;
+      -moz-osx-font-smoothing: auto;
+    }
+    
+    .number-text,
+    .phone-display,
+    .email-display {
+      /* Максимальная защита от Safari */
+      -webkit-text-size-adjust: none !important;
+      text-size-adjust: none !important;
+      -webkit-font-variant-ligatures: none;
+      font-variant-ligatures: none;
+    }
+  }
+}
+
 .footer-info a:hover,
 .footer-info a:focus {
   color: var(--accent-color, #d4b875) !important;
