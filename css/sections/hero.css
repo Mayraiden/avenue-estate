@@ -1,255 +1,127 @@
 /* ===== Hero Section ===== */
 .hero {
-  position: fixed; /* Возвращено с relative на fixed для эффекта статичности при скролле */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100dvh;
-  min-height: 100dvh;
-  overflow: hidden;
   display: flex;
   align-items: center;
-  isolation: isolate;
-  padding-top: 0;
+  overflow: hidden;
   z-index: 1;
   pointer-events: none;
+  isolation: isolate;
 }
 
-/* Hero Button Styles */
-.hero-button {
-  pointer-events: auto;
-  padding: clamp(14px, 1.2vw + 10px, 22px) clamp(28px, 4vw, 60px);
-  background-color: #3F2B23; /* Изменен цвет на более нейтральный, соответствующий фону */
-  color: var(--text-color-on-dark);
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: clamp(16px, 1.2vw + 12px, 20px);
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
-  position: absolute;
-  bottom: clamp(24px, 8vh, 120px);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  text-transform: uppercase;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  animation: buttonAppear 1s ease-out forwards;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  line-height: 1.2;
-  min-height: 48px;
-  max-width: 92vw;
-  white-space: nowrap;
-}
-
-@keyframes buttonAppear {
-  0% {
-    opacity: 0;
-    transform: translateX(-50%) translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(-50%);
-  }
-}
-
-/* Анимация мерцания удалена */
-
-.hero-button:hover {
-  background-color: #5a3e33; /* Более темный оттенок основного цвета */
-  transform: translateX(-50%) translateY(-3px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-}
-
-.hero-button:active {
-  transform: translateX(-50%) translateY(-1px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Disable auto-scroll for services accordion */
-.services-accordion {
-  scroll-behavior: auto;
-}
-
-.services-accordion .accordion-item:target {
-  scroll-margin: 0;
-}
-
+/* Фон */
 .hero__backdrop {
   position: absolute;
   inset: 0;
   z-index: 1;
   background-size: cover;
-  background-position: center center;
+  background-position: center;
   background-repeat: no-repeat;
   opacity: 0;
   transition: opacity 0.8s ease, background-image 0.3s ease;
-  will-change: opacity, background-image; /* Оптимизация для GPU */
-  backface-visibility: hidden; /* Стандартное свойство для совместимости */
-  -webkit-backface-visibility: hidden; /* Исправление для Safari */
-  -webkit-transform: translateZ(0); /* Исправление для iOS */
-  transform: translateZ(0);
+  will-change: opacity, background-image;
 }
 
-/* После загрузки */
 .hero__backdrop.loaded {
   opacity: 1;
 }
 
-/* Мобильная версия (до 768px) */
-@media (max-width: 768px) {
-  .hero__backdrop {
-    background-position: center 40%;
-  }
-  .hero {
-    align-items: flex-start;
-    padding-top: 18vh;
-  }
+/* Hero Button */
+/* ===== Hero Button ===== */
+.hero-button {
+  pointer-events: auto;
+  padding: clamp(14px, 1.2vw + 10px, 22px) clamp(28px, 4vw, 60px);
+  background-color: #3F2B23;
+  color: var(--text-color-on-dark);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: clamp(16px, 1.2vw + 12px, 20px);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  bottom: calc(clamp(24px, 8vh, 120px) + 50px);
+  transform: translateX(-50%);
+  z-index: 2;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  line-height: 1.2;
+  min-height: 48px;
+  max-width: 92vw;
+  white-space: nowrap;
+  animation: buttonAppear 1s ease-out forwards;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.hero-button:hover,
+.hero-button:active {
+  text-decoration: none;
+}
+
+/* Анимация появления */
+@keyframes buttonAppear {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Hover / Active */
+.hero-button:hover {
+  background-color: #5a3e33;
+  transform: translateX(-50%) translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.hero-button:active {
+  transform: translateX(-50%) translateY(-1px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+
+
+@media (max-width: 1200px) { /* Под десктоп */
   .hero-button {
-    bottom: calc(clamp(24px, 8vh, 120px) + 150px);
+    transform: translateX(-50%) translateY(calc(var(--hero-button-y, 0px) - 200px));
   }
 }
 
-/* Маленькие экраны (до 480px) */
-@media (max-width: 480px) {
-  .hero__backdrop {
-    background-position: center 50%;
-  }
-  .hero {
-    padding-top: 15vh;
-  }
-  .hero-button {
-    bottom: calc(clamp(24px, 8vh, 120px) + 230px);
-    padding: clamp(16px, 3.5vw, 24px) clamp(32px, 8vw, 68px);
-    font-size: clamp(17px, 1.5vw + 12px, 21px);
-    min-height: 52px;
-  }
-}
+/* ---------- Обновляем медиазапросы для конкретных устройств ---------- */
 
-/* Очень маленькие экраны (до 375px) - iPhone SE, iPhone X и т.д. */
+/* iPhone SE (до 375px) */
 @media (max-width: 375px) {
-  .hero__backdrop {
-    background-position: center 45%;
-  }
-  .hero {
-    padding-top: 12vh;
-  }
   .hero-button {
-    bottom: calc(clamp(24px, 8vh, 120px) + 250px);
-    padding: clamp(18px, 4vw, 26px) clamp(36px, 9vw, 72px);
-    font-size: clamp(18px, 2vw + 12px, 22px);
-    min-height: 54px;
+    --hero-button-y: 180px;
+    transform: translateX(-50%) translateY(calc(var(--hero-button-y) - 200px));
   }
 }
 
-/* Экстремально маленькие экраны (до 360px) - iPhone 13 mini и меньше */
-@media (max-width: 380px) {
-  .hero__backdrop {
-    background-position: center 50%;
-  }
-  .hero {
-    padding-top: 10vh;
-  }
+/* iPhone 12/13/14/15 (390px ширина) */
+@media (min-width: 376px) and (max-width: 430px) {
   .hero-button {
-    bottom: calc(clamp(20px, 6vh, 100px) + 130px);
-    padding: clamp(16px, 3.5vw, 24px) clamp(32px, 8vw, 68px);
-    font-size: clamp(16px, 1.8vw + 10px, 20px);
-    min-height: 50px;
-    max-width: 95vw;
-    white-space: normal;
-    text-align: center;
-    line-height: 1.1;
+    --hero-button-y: 200px;
+    transform: translateX(-50%) translateY(calc(var(--hero-button-y) - 200px));
   }
 }
 
-/* Очень маленькие экраны (до 320px) - старые iPhone */
-@media (max-width: 320px) {
-  .hero__backdrop {
-    background-position: center 55%;
-  }
-  .hero {
-    padding-top: 8vh;
-  }
+/* iPhone 14/15/16 Pro (430px ширина) */
+@media (min-width: 431px) and (max-width: 454px) {
   .hero-button {
-    bottom: calc(clamp(16px, 5vh, 80px) + 110px);
-    padding: clamp(14px, 3vw, 22px) clamp(28px, 7vw, 60px);
-    font-size: clamp(14px, 1.6vw + 8px, 18px);
-    min-height: 46px;
-    max-width: 98vw;
-    white-space: normal;
-    text-align: center;
-    line-height: 1.1;
+    --hero-button-y: 220px;
+    transform: translateX(-50%) translateY(calc(var(--hero-button-y) - 200px));
   }
 }
 
-/* Специальные правила для устройств Apple */
-@supports (-webkit-touch-callout: none) {
-  /* iOS устройства */
-  .hero__backdrop {
-    background-attachment: scroll; /* Предотвращает проблемы с fixed на iOS */
-    -webkit-overflow-scrolling: touch; /* Улучшает плавность прокрутки */
-    /* Исправления для эффекта наплыва на iOS */
-    will-change: opacity, transform;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-  
-  .hero {
-    /* Исправления для статического эффекта на iOS */
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-  
+/* iPhone 16 Pro Max (454px+) */
+@media (min-width: 455px) and (max-width: 1200px) {
   .hero-button {
-    /* Исправления для iOS Safari */
-    appearance: none; /* Стандартное свойство для совместимости */
-    -webkit-appearance: none;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
-    /* Принудительная видимость на iOS */
-    display: inline-block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    /* Исправление позиционирования на iOS */
-    position: fixed !important;
-    z-index: 9999 !important;
-  }
-  
-  /* Дополнительные исправления для Safari на маленьких экранах */
-  @media (max-width: 360px) {
-    .hero-button {
-      /* Safari на маленьких экранах */
-      -webkit-transform: translateX(-50%) translateZ(0);
-      transform: translateX(-50%) translateZ(0);
-      -webkit-perspective: 1000px;
-      perspective: 1000px;
-      /* Принудительное обновление слоя */
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-      /* Исправление рендеринга в Safari */
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-  }
-  
-  @media (max-width: 320px) {
-    .hero-button {
-      /* Safari на очень маленьких экранах */
-      -webkit-transform: translateX(-50%) translateZ(0) scale(0.95);
-      transform: translateX(-50%) translateZ(0) scale(0.95);
-      /* Дополнительная оптимизация для Safari */
-      -webkit-filter: none;
-      filter: none;
-    }
+    --hero-button-y: 240px;
+    transform: translateX(-50%) translateY(calc(var(--hero-button-y) - 200px));
   }
 }

@@ -713,3 +713,25 @@
         height: 44px;
     }
 }
+
+.footer a[href^="tel"],
+.footer a[href^="sms"],
+.footer a[href^="mailto"],
+.footer .number-text,
+.footer .phone-display,
+.footer .email-display {
+  color: inherit !important;
+  text-decoration: none;
+  -webkit-text-size-adjust: none;
+}
+
+/* Для iOS/Safari — принудительное снятие окраски и автоссылок */
+@supports (-webkit-touch-callout: none) {
+  .footer a[href^="tel"],
+  .footer a[href^="sms"],
+  .footer a[href^="mailto"] {
+    color: inherit !important;
+    text-decoration: none !important;
+    -webkit-text-size-adjust: none !important;
+  }
+}
