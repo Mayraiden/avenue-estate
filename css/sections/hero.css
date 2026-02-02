@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100dvh;
+  height: 100svh;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -19,6 +19,7 @@
   inset: 0;
   z-index: 1;
   background-size: cover;
+  background-color: #3F2B23;
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0;
@@ -86,9 +87,19 @@
 
 
 
-@media (max-width: 1200px) { /* Под десктоп */
-  .hero-button {
-    transform: translateX(-50%) translateY(calc(var(--hero-button-y, 0px) - 200px));
+@media (min-width: 1280px) {
+  
+}
+
+@media (min-width: 721px) { /* Под десктоп */
+  .hero__backdrop {
+    background-size: 70%;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero__backdrop {
+    background-size: cover;
   }
 }
 
